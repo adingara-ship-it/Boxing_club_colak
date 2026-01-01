@@ -1,38 +1,26 @@
 /* ================================================= */
-/* VARIABLES GLOBALES                                */
+/* VARIABLES & RESET                                 */
 /* ================================================= */
-
 :root {
-  --color-bg: #000000;
-  --color-title: #f9d77a;
-  --color-accent: #c79d31;
-  --color-cta: #f9d77a;
-  --color-text: #eaeaea;
-  --color-text-muted: #9a9a9a;
-  --color-header-bg: rgba(0, 0, 0, 0.85);
-
-  --font-title: "Neue Montreal", sans-serif;
-  --font-text: "Inter", sans-serif;
+  --color-bg: #030303; /* Noir profond */
+  --color-accent: #c79d31; /* Or */
+  --color-title: #ffffff;
+  --color-text: #ffffff;
+  --color-text-muted: #888888;
   --font-accent: "Bebas Neue", sans-serif;
-  
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --font-text: "Inter", sans-serif;
+  --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ================================================= */
-/* RESET & STYLES DE BASE                            */
-/* ================================================= */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+*, *::before, *::after { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
 }
 
-html {
-  scroll-behavior: smooth;
+html { 
+  scroll-behavior: smooth; 
+  background: var(--color-bg); 
   overflow-x: hidden;
 }
 
@@ -40,275 +28,46 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-text);
-  line-height: 1.6;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  position: relative;
+  overflow-x: hidden;
 }
 
-/* Effet de grain subtil sur le body */
-body::before {
+/* Texture de grain pour habiller le fond noir */
+body::after {
   content: '';
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-  opacity: 0.03;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
   pointer-events: none;
-  z-index: 1;
-}
-
-/* Styles par défaut pour les liens */
-a {
-  color: var(--color-title); 
-  text-decoration: none;
-  transition: var(--transition-smooth);
-}
-
-a:hover {
-  color: var(--color-cta);
-  text-decoration: none;
-}
-
-/* TYPOGRAPHIE */
-h1, h2, h3, h4 {
-  font-family: var(--font-title);
-  color: var(--color-title);
-  text-transform: uppercase;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-h2 {
-  position: relative;
-  display: inline-block;
-}
-
-p {
-  font-size: 1.05rem;
-  color: var(--color-text);
-}
-
-.section-label {
-  font-family: var(--font-accent);
-  color: var(--color-accent);
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  font-size: 0.95rem;
-  position: relative;
-  display: inline-block;
-  padding-bottom: 8px;
-}
-
-.section-label::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 40px;
-  height: 2px;
-  background: linear-gradient(90deg, var(--color-accent), transparent);
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-center .section-label::after {
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.mt-xl {
-  margin-top: 80px;
-}
-
-.mb-xl {
-  margin-bottom: 80px;
-}
-
-/* ================================================= */
-/* STRUCTURE & CONTENEURS                            */
-/* ================================================= */
-
-#page {
-  width: 100%;
-  overflow-x: hidden;
-  position: relative;
-  z-index: 2;
+  z-index: 9999;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.container.narrow {
-  max-width: 900px;
-}
-
-.section {
-  padding: 90px 0;
-  position: relative;
-}
-
-.section-title {
-  font-size: clamp(2.2rem, 4vw, 3.5rem);
-  margin-bottom: 30px;
-  background: linear-gradient(135deg, var(--color-title) 0%, var(--color-accent) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ================================================= */
-/* HEADER & NAVIGATION                              */
-/* ================================================= */
-
-.site-header {
-  position: fixed;
   width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 100;
-  padding: 20px 40px;
-  background-color: var(--color-header-bg);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(199, 157, 49, 0.1);
-  transition: var(--transition-smooth);
-}
-
-.site-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.site-header:hover::before {
-  opacity: 0.5;
-}
-
-.header-wrapper {
-  max-width: 1400px;
+  max-width: 1600px; /* Largeur maximale importante pour éviter l'effet "boîte" */
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 0 5%;
 }
-
-/* Logo */
-.logo {
-  height: 55px;
-  width: auto;
-  transition: var(--transition-smooth);
-  filter: drop-shadow(0 0 10px rgba(249, 215, 122, 0.3));
-}
-
-.logo-link:hover .logo {
-  transform: scale(1.05);
-  filter: drop-shadow(0 0 15px rgba(249, 215, 122, 0.5));
-}
-
-/* Navigation */
-.main-nav {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.nav-list {
-  display: flex;
-  list-style: none;
-  gap: 30px;
-}
-
-.nav-link {
-  color: var(--color-text);
-  text-decoration: none;
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 1rem;
-  padding: 5px 0;
-  transition: var(--transition-smooth);
-  position: relative;
-  letter-spacing: 0.5px;
-}
-
-.nav-link::before {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--color-title), var(--color-accent));
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::before,
-.nav-link.active::before {
-  width: 100%;
-}
-
-.nav-link:hover,
-.nav-link.active {
-  color: var(--color-title);
-}
-
-/* ================================================= */
-/* BOUTONS (CTA)                                     */
-/* ================================================= */
-
-.cta-button {
-  display: inline-block;
-  font-family: var(--font-accent);
-  font-size: 1.3rem;
-  padding: 14px 40px;
-  background: linear-gradient(135deg, var(--color-cta) 0%, var(--color-accent) 100%);
-  color: #000;
-  text-decoration: none;
-  border: 2px solid var(--color-cta);
-  letter-spacing: 1.5px;
-  transition: var(--transition-smooth);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(249, 215, 122, 0.3);
-  text-transform: uppercase;
-}
-
-/* ================================================= */
-/* FOOTER                                            */
-/* ================================================= */
-
-.site-footer {
-  border-top: 1px solid rgba(199, 157, 49, 0.25);
-  padding: 30px 0;
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  background: linear-gradient(180deg, transparent, rgba(199, 157, 49, 0.03));
-}
-
-/* ================================================= */
-/* RESPONSIVE                                        */
-/* ================================================= */
 
 @media (max-width: 768px) {
-  .site-header {
-    min-height: 80px; 
-    padding: 20px 24px;
-  }
-  
-  .main-nav {
-    display: none; 
-  }
+  .container { padding: 0 24px; }
 }
+
+h1, h2, h3 { 
+  font-family: var(--font-accent); 
+  text-transform: uppercase; 
+  line-height: 0.9; 
+}
+
+a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+/* Effet de contour pour le texte */
+.text-stroke {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+}
+
+/* Utilitaires */
+ul { list-style: none; }

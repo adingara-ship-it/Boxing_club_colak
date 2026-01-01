@@ -21,10 +21,6 @@ const navLinks = [
 
 const currentPath = Astro.url.pathname.replace(/\/$/, "");
 const currentYear = new Date().getFullYear();
-
-const phoneDisplay = "0487 11 88 77";
-const phoneValue = "+32487118877";
-const emailClub = "mirac.colak@outlook.com";
 ---
 
 <!DOCTYPE html>
@@ -40,210 +36,55 @@ const emailClub = "mirac.colak@outlook.com";
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
 
   <style is:global>
-    :root {
-      --header-height: 80px;
-      --color-accent: #c79d31;
-      --color-title: #f9d77a;
-      --color-text-muted: #a0a0a0;
-      --font-accent: 'Bebas Neue', sans-serif;
-    }
-
-    @media (max-width: 768px) {
-      :root { --header-height: 70px; }
-    }
-
-    body.menu-open { overflow: hidden; }
-
-    /* HEADER */
+    /* HEADER STYLES */
     .site-header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      height: var(--header-height);
+      position: absolute; /* Superposition sur le hero */
+      top: 0; width: 100%;
+      height: 100px;
       z-index: 1100;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(199,157,49,0.2);
+      display: flex; align-items: center;
     }
 
     .header-wrapper {
-      max-width: 1400px;
-      height: 100%;
-      margin: 0 auto;
-      padding: 0 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      width: 100%; max-width: 1600px;
+      margin: 0 auto; padding: 0 5%;
+      display: flex; justify-content: space-between; align-items: center;
     }
 
-    .logo-container { height: 50px; }
-    .logo-img { height: 100%; }
+    .logo-img { height: 35px; }
 
-    .desktop-only { display: flex; }
-
-    .nav-list {
-      display: flex;
-      gap: 3rem;
-      list-style: none;
-    }
-
+    /* Desktop Nav */
+    .nav-list { display: flex; gap: 4rem; list-style: none; }
     .nav-link {
-      font-family: var(--font-accent);
-      font-size: 1.1rem;
-      letter-spacing: 1px;
-      color: #fff;
-      text-decoration: none;
-      text-transform: uppercase;
+      font-family: var(--font-accent); font-size: 1.2rem;
+      letter-spacing: 2px; text-transform: uppercase; color: #fff; opacity: 0.6;
     }
+    .nav-link.active, .nav-link:hover { opacity: 1; color: var(--color-accent); }
 
-    .nav-link.active,
-    .nav-link:hover {
-      color: var(--color-accent);
-    }
+    /* Mobile Nav Toggle */
+    .mobile-menu-toggle { display: none; background: none; border: none; cursor: pointer; }
+    .burger-icon { width: 30px; height: 2px; background: #fff; position: relative; }
+    .burger-icon::before { content: ''; position: absolute; top: -8px; right: 0; width: 20px; height: 2px; background: #fff; }
 
-    /* MOBILE */
-    .mobile-menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
       .desktop-only { display: none; }
       .mobile-menu-toggle { display: block; }
     }
 
-    .burger-icon {
-      width: 25px;
-      height: 18px;
-      position: relative;
-    }
-
-    .burger-icon span {
-      position: absolute;
-      height: 2px;
-      width: 100%;
-      background: #fff;
-      left: 0;
-    }
-
-    .burger-icon span:nth-child(1) { top: 0; }
-    .burger-icon span:nth-child(2) { top: 8px; }
-    .burger-icon span:nth-child(3) { top: 16px; }
-
+    /* Mobile Overlay */
     .mobile-menu-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.96);
-      display: none;
-      z-index: 2000;
-      align-items: center;
-      justify-content: center;
+      position: fixed; inset: 0; background: #000;
+      display: none; z-index: 2000; align-items: center; justify-content: center;
     }
+    .mobile-menu-overlay.is-open { display: flex; }
+    .mobile-nav a { font-family: var(--font-accent); font-size: 3.5rem; color: #fff; padding: 20px 0; display: block; text-align: center; }
+    .mobile-close { position: absolute; top: 30px; right: 30px; font-size: 2.5rem; color: #fff; background: none; border: none; }
 
-    .mobile-menu-overlay.is-open {
-      display: flex;
-    }
-
-    .mobile-nav ul {
-      list-style: none;
-      text-align: center;
-      padding: 0;
-    }
-
-    .mobile-nav a {
-      font-family: var(--font-accent);
-      font-size: 2.4rem;
-      color: #fff;
-      text-decoration: none;
-      display: block;
-      padding: 12px 0;
-    }
-
-    .mobile-close {
-      position: absolute;
-      top: 25px;
-      right: 25px;
-      font-size: 2rem;
-      color: #fff;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    /* FOOTER */
-    .site-footer {
-      background: #050505;
-      padding: 70px 0 0;
-      border-top: 1px solid rgba(199,157,49,0.1);
-      color: #fff;
-    }
-
-    .footer-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 5%;
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 60px;
-    }
-
-    @media (max-width: 768px) {
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-        text-align: center;
-      }
-    }
-
-    .footer-logo {
-      height: 60px;
-      margin-bottom: 20px;
-    }
-
-    .footer-tagline {
-      color: var(--color-text-muted);
-      margin-bottom: 20px;
-    }
-
-    .footer-h3 {
-      font-family: var(--font-accent);
-      color: var(--color-title);
-      margin-bottom: 15px;
-      letter-spacing: 2px;
-    }
-
-    .footer-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .footer-list li {
-      margin-bottom: 10px;
-    }
-
-    .footer-list a,
-    .contact-item {
-      color: var(--color-text-muted);
-      text-decoration: none;
-      font-size: 0.95rem;
-    }
-
-    .footer-legal {
-      margin-top: 50px;
-      padding: 25px 0;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.75rem;
-      text-align: center;
-      opacity: 0.7;
-    }
+    /* FOOTER BASIC */
+    .site-footer { background: #000; padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; color: #666; font-size: 0.9rem;}
   </style>
 </head>
 
@@ -253,7 +94,6 @@ const emailClub = "mirac.colak@outlook.com";
     <a href="/" class="logo-container">
       <img src="/logo.png" alt="Club COLAK" class="logo-img" />
     </a>
-
     <nav class="desktop-only">
       <ul class="nav-list">
         {navLinks.map(link => (
@@ -263,9 +103,8 @@ const emailClub = "mirac.colak@outlook.com";
         ))}
       </ul>
     </nav>
-
-    <button class="mobile-menu-toggle" id="menu-btn">
-      <div class="burger-icon"><span></span><span></span><span></span></div>
+    <button class="mobile-menu-toggle" id="menu-btn" aria-label="Menu">
+      <div class="burger-icon"></div>
     </button>
   </div>
 </header>
@@ -286,33 +125,8 @@ const emailClub = "mirac.colak@outlook.com";
 </main>
 
 <footer class="site-footer">
-  <div class="footer-container">
-    <div class="footer-grid">
-      <div>
-        <img src="/logo.png" class="footer-logo" />
-        <p class="footer-tagline">Discipline. Encadrement. Progression.</p>
-      </div>
-
-      <div>
-        <h3 class="footer-h3">Navigation</h3>
-        <ul class="footer-list">
-          {navLinks.map(link => <li><a href={link.href}>{link.title}</a></li>)}
-        </ul>
-      </div>
-
-      <div>
-        <h3 class="footer-h3">Contact</h3>
-        <ul class="footer-list">
-          <li class="contact-item">Rue de l'Olive 13A<br/>7100 La Louvière</li>
-          <li class="contact-item"><a href={`tel:${phoneValue}`}>{phoneDisplay}</a></li>
-          <li class="contact-item"><a href={`mailto:${emailClub}`}>{emailClub}</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-legal">
-      © {currentYear} Boxing Club COLAK — Tous droits réservés
-    </div>
+  <div class="container">
+    © {currentYear} Boxing Club COLAK. Tous droits réservés.
   </div>
 </footer>
 
@@ -324,12 +138,12 @@ const emailClub = "mirac.colak@outlook.com";
     const links = document.querySelectorAll('.mobile-link');
 
     const closeMenu = () => {
-      overlay.classList.remove('is-open');
+      overlay?.classList.remove('is-open');
       document.body.classList.remove('menu-open');
     };
 
     menuBtn?.addEventListener('click', () => {
-      overlay.classList.add('is-open');
+      overlay?.classList.add('is-open');
       document.body.classList.add('menu-open');
     });
 
