@@ -1,3 +1,4 @@
+---
 import '../styles/global.css';
 
 export interface Props {
@@ -48,7 +49,6 @@ const emailClub = "mirac.colak@outlook.com";
       --color-title: #f9d77a;
       --color-text-muted: #a0a0a0;
       --font-accent: 'Bebas Neue', sans-serif;
-      --transition-base: all 0.3s ease;
     }
 
     @media (max-width: 768px) {
@@ -104,7 +104,7 @@ const emailClub = "mirac.colak@outlook.com";
       color: var(--color-accent);
     }
 
-    /* MOBILE MENU */
+    /* MOBILE */
     .mobile-menu-toggle {
       display: none;
       background: none;
@@ -254,7 +254,7 @@ const emailClub = "mirac.colak@outlook.com";
       <img src="/logo.png" alt="Club COLAK" class="logo-img" />
     </a>
 
-    <nav class="main-nav desktop-only">
+    <nav class="desktop-only">
       <ul class="nav-list">
         {navLinks.map(link => (
           <li>
@@ -264,7 +264,7 @@ const emailClub = "mirac.colak@outlook.com";
       </ul>
     </nav>
 
-    <button class="mobile-menu-toggle" id="menu-btn" aria-label="Menu">
+    <button class="mobile-menu-toggle" id="menu-btn">
       <div class="burger-icon"><span></span><span></span><span></span></div>
     </button>
   </div>
@@ -281,7 +281,7 @@ const emailClub = "mirac.colak@outlook.com";
   </nav>
 </div>
 
-<main id="page">
+<main>
   <slot />
 </main>
 
@@ -289,7 +289,7 @@ const emailClub = "mirac.colak@outlook.com";
   <div class="footer-container">
     <div class="footer-grid">
       <div>
-        <img src="/logo.png" class="footer-logo" alt="Boxing Club COLAK" />
+        <img src="/logo.png" class="footer-logo" />
         <p class="footer-tagline">Discipline. Encadrement. Progression.</p>
       </div>
 
@@ -316,25 +316,27 @@ const emailClub = "mirac.colak@outlook.com";
   </div>
 </footer>
 
-<script is:inline>
-  const menuBtn = document.getElementById('menu-btn');
-  const closeBtn = document.getElementById('menu-close');
-  const overlay = document.getElementById('mobile-overlay');
-  const links = document.querySelectorAll('.mobile-link');
+<script>
+  if (typeof window !== "undefined") {
+    const menuBtn = document.getElementById('menu-btn');
+    const closeBtn = document.getElementById('menu-close');
+    const overlay = document.getElementById('mobile-overlay');
+    const links = document.querySelectorAll('.mobile-link');
 
-  const closeMenu = () => {
-    overlay.classList.remove('is-open');
-    document.body.classList.remove('menu-open');
-  };
+    const closeMenu = () => {
+      overlay.classList.remove('is-open');
+      document.body.classList.remove('menu-open');
+    };
 
-  menuBtn?.addEventListener('click', () => {
-    overlay.classList.add('is-open');
-    document.body.classList.add('menu-open');
-  });
+    menuBtn?.addEventListener('click', () => {
+      overlay.classList.add('is-open');
+      document.body.classList.add('menu-open');
+    });
 
-  closeBtn?.addEventListener('click', closeMenu);
-  overlay?.addEventListener('click', e => e.target === overlay && closeMenu());
-  links.forEach(l => l.addEventListener('click', closeMenu));
+    closeBtn?.addEventListener('click', closeMenu);
+    overlay?.addEventListener('click', e => e.target === overlay && closeMenu());
+    links.forEach(l => l.addEventListener('click', closeMenu));
+  }
 </script>
 </body>
 </html>
