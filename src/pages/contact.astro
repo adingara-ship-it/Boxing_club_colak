@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const clubName = "BOXING Club COLAK";
+const clubName = "BOXING CLUB COLAK";
 const adresseClub = "Rue de l'Olive 13A, 7100 La Louvière";
 const clubEmail = "mirac.colak@outlook.com";
 const clubPhone = "0487 11 88 77";
@@ -21,18 +21,19 @@ const subjects = [
   description="Contactez le Boxing Club Colak à La Louvière pour une séance d'essai ou toute demande d'information."
 >
 
-<section class="contact-hero">
-  <div class="container">
-    <h1 class="page-title">Contactez-nous</h1>
-    <p class="hero-subtitle">Prêt à monter sur le ring ? Envoyez-nous un message ou passez nous voir directement au club.</p>
+<section class="contact-hero first">
+  <div class="container reveal">
+    <span class="section-label">Disponibilité & Écoute</span>
+    <h1 class="page-title">ENTRER SUR <span class="text-stroke">LE RING</span></h1>
+    <p class="hero-subtitle">Prêt à franchir le pas ? Envoyez-nous un message ou passez nous voir directement au club pour une immersion totale.</p>
   </div>
 </section>
 
-<section class="section">
+<section class="section-contact-main">
   <div class="container">
     <div class="contact-grid">
       
-      <div class="contact-info-wrapper">
+      <div class="contact-info-wrapper reveal">
         <div class="info-card">
           <h2 class="info-title">Nos coordonnées</h2>
           
@@ -43,17 +44,17 @@ const subjects = [
 
           <div class="info-item">
             <span class="info-label">Téléphone</span>
-            <p><a href={`tel:${clubPhoneValue}`} class="link">{clubPhone}</a></p>
+            <p><a href={`tel:${clubPhoneValue}`} class="link-gold">{clubPhone}</a></p>
           </div>
 
           <div class="info-item">
             <span class="info-label">E-mail</span>
-            <p><a href={`mailto:${clubEmail}`} class="link">{clubEmail}</a></p>
+            <p><a href={`mailto:${clubEmail}`} class="link-gold">{clubEmail}</a></p>
           </div>
         </div>
 
         <div class="social-card">
-          <h2 class="info-title">Suivez-nous</h2>
+          <h2 class="info-title">Réseaux Sociaux</h2>
           <div class="social-links">
             <a href="https://www.instagram.com/boxing.club.colak/" target="_blank" rel="noopener noreferrer" class="social-btn">Instagram</a>
             <a href="https://www.facebook.com/profile.php?id=100089497443998" target="_blank" rel="noopener noreferrer" class="social-btn">Facebook</a>
@@ -62,7 +63,7 @@ const subjects = [
         </div>
       </div>
 
-      <div class="form-wrapper">
+      <div class="form-wrapper reveal">
         <form id="contact-form" class="contact-form">
           <div class="form-group-row">
             <div class="form-group">
@@ -89,15 +90,15 @@ const subjects = [
             <textarea id="message" name="message" rows="6" placeholder="Comment pouvons-nous vous aider ?" required></textarea>
           </div>
 
-          <button type="submit" id="submit-btn" class="cta-button full-width">Envoyer le message</button>
+          <button type="submit" id="submit-btn" class="btn-submit">ENVOYER LE MESSAGE</button>
           <p id="form-status" class="form-status-msg"></p>
         </form>
       </div>
     </div>
 
-    <div class="map-container">
+    <div class="map-container reveal">
       <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2541.536962254714!2d4.137838576884021!3d50.43105788874134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c23063f45c8465%3A0xc3f6050b11c7f991!2sRue%20de%20l'Olive%2013%2C%207100%20La%20Louvi%C3%A8re!5e0!3m2!1sfr!2sbe!4v1700000000000!5m2!1sfr!2sbe" 
+        src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=ADDRESS0" 
         width="100%" 
         height="450" 
         style="border:0;" 
@@ -124,7 +125,7 @@ const subjects = [
   contactForm.addEventListener('submit', function(event) {
     event.preventDefault();
     
-    submitBtn.innerText = "Envoi en cours...";
+    submitBtn.innerText = "ENVOI EN COURS...";
     submitBtn.disabled = true;
 
     emailjs.sendForm('service_yf1ji1g', 'template_0clvoqw', this)
@@ -132,54 +133,168 @@ const subjects = [
         statusMsg.innerText = "Message envoyé avec succès ! Le coach vous répondra bientôt.";
         statusMsg.style.color = "#c79d31";
         contactForm.reset();
-        submitBtn.innerText = "Envoyer le message";
+        submitBtn.innerText = "ENVOYER LE MESSAGE";
         submitBtn.disabled = false;
       }, function(error) {
         statusMsg.innerText = "Erreur lors de l'envoi. Veuillez réessayer plus tard.";
         statusMsg.style.color = "#ff4d4d";
-        submitBtn.innerText = "Réessayer";
+        submitBtn.innerText = "RÉESSAYER";
         submitBtn.disabled = false;
       });
   });
+
+  // Animation Reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('is-visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
 <style>
-  .contact-hero { padding: 150px 0 60px; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); text-align: center; }
-  .page-title { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--color-title, #f9d77a); text-transform: uppercase; font-family: var(--font-accent); margin-bottom: 20px; }
-  .hero-subtitle { max-width: 600px; margin: 0 auto; font-size: 1.1rem; opacity: 0.8; }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; margin-top: 40px; }
-
-  .info-card, .social-card { background: rgba(199, 157, 49, 0.05); border: 1px solid rgba(199, 157, 49, 0.2); padding: 40px; margin-bottom: 30px; }
-  .info-title { font-family: var(--font-accent); color: var(--color-accent, #c79d31); text-transform: uppercase; font-size: 1.4rem; margin-bottom: 30px; letter-spacing: 1px; }
-  .info-item { margin-bottom: 24px; }
-  .info-label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--color-accent, #c79d31); letter-spacing: 2px; margin-bottom: 5px; }
-  .info-item p { font-size: 1.1rem; }
-
-  .link { color: #fff; text-decoration: none; transition: 0.3s; }
-  .link:hover { color: var(--color-accent, #c79d31); }
-  .social-links { display: flex; gap: 15px; flex-wrap: wrap; }
-  .social-btn { padding: 8px 16px; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-  .social-btn:hover { background: var(--color-accent, #c79d31); color: #000; }
-
-  .form-wrapper { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; }
-  .contact-form { display: flex; flex-direction: column; gap: 24px; }
-  .form-group-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .form-group { display: flex; flex-direction: column; gap: 8px; }
-  .form-group label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
+  /* CONFIGURATION GÉNÉRALE */
+  .contact-hero { padding: 180px 0 80px; text-align: left; }
   
-  input, select, textarea { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); padding: 14px; color: #fff; font-family: inherit; transition: 0.3s; }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--color-accent, #c79d31); background: rgba(199, 157, 49, 0.05); }
-
-  .cta-button { background: var(--color-accent, #c79d31); color: #000; padding: 18px; border: none; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
-  .cta-button:hover { background: var(--color-title, #f9d77a); transform: translateY(-2px); }
-  
-  .form-status-msg { margin-top: 15px; font-size: 0.9rem; font-weight: 500; }
-
-  .map-container { margin-top: 60px; border: 1px solid rgba(199, 157, 49, 0.3); border-radius: 4px; overflow: hidden; line-height: 0; }
-  .map-container iframe { filter: grayscale(1) invert(0.9) contrast(1.2); }
-
-  @media (max-width: 900px) {
-    .contact-grid { grid-template-columns: 1fr; }
-    .form-group-row { grid-template-columns: 1fr; }
+  .section-label {
+    display: block;
+    font-family: var(--font-accent);
+    color: var(--color-accent);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
   }
+
+  .page-title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: #fff;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    line-height: 1;
+  }
+
+  .text-stroke {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+  }
+
+  .hero-subtitle { 
+    max-width: 700px; 
+    font-size: 1.2rem; 
+    color: #888; 
+    line-height: 1.6;
+  }
+
+  .section-contact-main { padding-bottom: 100px; }
+  .contact-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1.6fr; 
+    gap: 80px; 
+    align-items: flex-start;
+  }
+
+  /* INFOS & CARDS */
+  .info-card, .social-card { 
+    background: rgba(255, 255, 255, 0.02); 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    padding: 50px; 
+    margin-bottom: 30px; 
+  }
+
+  .info-title { 
+    font-family: var(--font-accent); 
+    color: #fff; 
+    text-transform: uppercase; 
+    font-size: 1.5rem; 
+    margin-bottom: 40px; 
+    letter-spacing: 2px; 
+  }
+
+  .info-item { margin-bottom: 30px; }
+  .info-label { 
+    display: block; 
+    font-size: 0.7rem; 
+    text-transform: uppercase; 
+    color: var(--color-accent); 
+    letter-spacing: 3px; 
+    margin-bottom: 10px; 
+  }
+  .info-item p { font-size: 1.2rem; color: #fff; }
+
+  .link-gold { color: #fff; text-decoration: none; transition: 0.3s; font-weight: 700; }
+  .link-gold:hover { color: var(--color-accent); }
+
+  .social-links { display: flex; gap: 15px; flex-wrap: wrap; }
+  .social-btn { 
+    padding: 10px 20px; 
+    border: 1px solid rgba(255,255,255,0.1); 
+    color: #888; 
+    text-decoration: none; 
+    font-size: 0.8rem; 
+    font-family: var(--font-accent);
+    letter-spacing: 1px;
+    transition: 0.3s; 
+  }
+  .social-btn:hover { background: var(--color-accent); color: #000; border-color: var(--color-accent); }
+
+  /* FORMULAIRE - AGRANDI POUR MOBILE */
+  .form-wrapper { 
+    background: rgba(199, 157, 49, 0.03); 
+    border: 1px solid rgba(199, 157, 49, 0.1); 
+    padding: 60px; 
+  }
+  .contact-form { display: flex; flex-direction: column; gap: 30px; }
+  .form-group-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+  .form-group { display: flex; flex-direction: column; gap: 12px; }
+  .form-group label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: #666; font-family: var(--font-accent); }
+  
+  input, select, textarea { 
+    background: #000; 
+    border: 1px solid rgba(255,255,255,0.1); 
+    padding: 18px; 
+    color: #fff; 
+    font-size: 1rem;
+    transition: 0.3s; 
+  }
+  input:focus, select:focus, textarea:focus { 
+    outline: none; 
+    border-color: var(--color-accent); 
+    background: rgba(199, 157, 49, 0.05); 
+  }
+
+  .btn-submit { 
+    background: var(--color-accent); 
+    color: #000; 
+    padding: 22px; 
+    border: none; 
+    font-family: var(--font-accent);
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    cursor: pointer; 
+    transition: 0.3s; 
+    margin-top: 10px;
+  }
+  .btn-submit:hover { background: #fff; transform: translateY(-3px); }
+  
+  .form-status-msg { margin-top: 20px; font-size: 1rem; font-weight: 500; text-align: center; }
+
+  /* MAP */
+  .map-container { margin-top: 80px; border: 1px solid rgba(255, 255, 255, 0.05); filter: grayscale(1) invert(0.9) contrast(1.2); }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  @media (max-width: 768px) {
+    .contact-hero { padding-top: 140px; }
+    .form-wrapper { padding: 40px 20px; } /* Plus de place pour le formulaire sur mobile */
+    .form-group-row { grid-template-columns: 1fr; gap: 24px; }
+    .info-card, .social-card { padding: 30px; }
+  }
+
+  /* REVEAL ANIMATION */
+  .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
 </style>
