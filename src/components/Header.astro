@@ -1,0 +1,103 @@
+---
+const navLinks = [
+  { href: "/", title: "Accueil" },
+  { href: "/club", title: "Le Club" },
+  { href: "/contact", title: "Contact" },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
+---
+
+<header class="site-header">
+  <div class="header-wrapper">
+    <a href="/" class="logo-container">
+      <img src="/logo.png" alt="Club COLAK" class="logo-img" />
+    </a>
+    <nav class="desktop-only">
+      <ul class="nav-list">
+        {navLinks.map(link => (
+          <li>
+            <a href={link.href} class:list={["nav-link", { active: currentPath === link.href }]}>{link.title}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <button class="mobile-menu-toggle" id="menu-btn" aria-label="Menu">
+      <div class="burger-icon"></div>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu-overlay" id="mobile-overlay">
+  <button class="mobile-close" id="menu-close">✕</button>
+  <nav class="mobile-nav">
+    <ul>
+      {navLinks.map(link => (
+        <li><a href={link.href} class="mobile-link">{link.title}</a></li>
+      ))}
+    </ul>
+  </nav>
+</div>
+
+<style>
+  .site-header {
+    position: absolute;
+    top: 0; width: 100%;
+    height: 90px;
+    z-index: 1100;
+    display: flex; align-items: center;
+  }
+
+  .header-wrapper {
+    width: 100%; max-width: 1400px;
+    margin: 0 auto; padding: 0 5%;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .logo-img { height: 35px; }
+
+  .nav-list { display: flex; gap: 3rem; list-style: none; }
+  .nav-link {
+    font-family: var(--font-accent); font-size: 1.1rem;
+    letter-spacing: 2px; text-transform: uppercase; color: #fff; opacity: 0.6;
+  }
+  .nav-link.active, .nav-link:hover { opacity: 1; color: var(--color-accent); }
+
+  .mobile-menu-toggle { display: none; background: none; border: none; cursor: pointer; }
+  .burger-icon { width: 28px; height: 2px; background: #fff; position: relative; }
+  .burger-icon::before { content: ''; position: absolute; top: -8px; right: 0; width: 20px; height: 2px; background: #fff; }
+
+  @media (max-width: 992px) {
+    .desktop-only { display: none; }
+    .mobile-menu-toggle { display: block; }
+  }
+
+  .mobile-menu-overlay {
+    position: fixed; inset: 0; background: #000;
+    display: none; z-index: 2000; align-items: center; justify-content: center;
+  }
+  .mobile-menu-overlay.is-open { display: flex; }
+  .mobile-nav a { font-family: var(--font-accent); font-size: 3rem; color: #fff; padding: 15px 0; display: block; text-align: center; }
+  .mobile-close { position: absolute; top: 30px; right: 30px; font-size: 2.5rem; color: #fff; background: none; border: none; cursor: pointer; }
+</style>
+
+<script>
+  const menuBtn = document.getElementById('menu-btn');
+  const closeBtn = document.getElementById('menu-close');
+  const overlay = document.getElementById('mobile-overlay');
+  const links = document.querySelectorAll('.mobile-link');
+
+  const closeMenu = () => {
+    overlay?.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
+  };
+
+  menuBtn?.addEventListener('click', () => {
+    overlay?.classList.add('is-open');
+    document.body.classList.add('menu-open');
+  });
+
+  closeBtn?.addEventListener('click', closeMenu);
+  overlay?.addEventListener('click', (e) => { if(e.target === overlay) closeMenu(); });
+  links.forEach(l => l.addEventListener('click', closeMenu));
+</script>
