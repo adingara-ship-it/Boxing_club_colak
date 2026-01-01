@@ -1,8 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-// Données des Coaches
-const coaches = [
+// Données du Staff
+const staff = [
   {
     nom: "Mirac Colak",
     role: "Entraîneur Principal",
@@ -14,6 +14,26 @@ const coaches = [
     role: "Entraîneur des débutants et récréants",
     description: "Passionné par la transmission des bases du noble art, il accompagne les nouveaux membres et les pratiquants loisirs dans leur apprentissage et leur progression constante.",
     image: "/carmelo.JPG"
+  },
+  {
+    nom: "Ferhat Colak",
+    role: "Coach / Soigneur",
+    description: "Expert en gestion de coin et en soins immédiats, il assure le suivi physique et la récupération des boxeurs durant les entraînements et les combats.",
+    image: "/ferhat.jpeg",
+    customPos: "object-position: center top;" // Cadrage spécifique pour éviter de couper la tête
+  },
+  {
+    nom: "Massimo la Bella",
+    role: "Coach adjoint / Soigneur",
+    description: "Assistant technique indispensable, il épaule les entraîneurs principaux et veille à l'intégrité physique des athlètes sur le ring.",
+    image: "/mass.jpeg",
+    customPos: "object-position: center 25%;" // Cadrage spécifique ajusté individuellement
+  },
+  {
+    nom: "Pierre Gangai",
+    role: "Nutritionniste",
+    description: "Spécialiste de la performance par l'alimentation, il optimise les plans nutritionnels des boxeurs pour garantir une énergie maximale et une gestion du poids optimale.",
+    image: "/pierre.jpeg"
   }
 ];
 
@@ -21,7 +41,7 @@ const coaches = [
 const boxeursPro = [
   {
     nom: "Benito Muyayi",
-    categorie: "Welter",
+    categorie: "Welter Weight",
     palmares: "6-0-0 (4KO's)",
     image: "/beni.jpeg"
   },
@@ -30,6 +50,18 @@ const boxeursPro = [
     categorie: "Superlight Weight",
     palmares: "3-0-0",
     image: "/toni.jpeg"
+  },
+  {
+    nom: "Oguz-han Yilmaz",
+    categorie: "Light heavyweight",
+    palmares: "1-0-1",
+    image: "/zugo.jpeg"
+  },
+  {
+    nom: "Yesna Kasin",
+    categorie: "Super flyweight",
+    palmares: "à venir",
+    image: "/yesna.jpeg"
   }
 ];
 
@@ -38,7 +70,6 @@ const boxeursAmateurs = [
   { nom: "Joël Adingara", categorie: "Amateur", image: "" },
   { nom: "Jordan Midongs", categorie: "Amateur", image: "/jojo.jpeg" },
   { nom: "Kelson Impérial", categorie: "Amateur", image: "/kelson.jpeg" },
-  { nom: "Yesna Kasin", categorie: "Amateur", image: "/yesna.jpeg" },
   { nom: "Randy Konde", categorie: "Amateur", image: "/randy.jpeg" },
   { nom: "Murat Kulaksiz", categorie: "Amateur", image: "/murat.jpeg" },
   { nom: "Anselme Kabala", categorie: "Amateur", image: "/ace.jpeg" },
@@ -52,8 +83,7 @@ const boxeursAmateurs = [
 
 <BaseLayout 
   title="Le Club — BOXING Club COLAK" 
-  description="Découvrez l'histoire, les coaches et les boxeurs du Boxing Club Colak à La Louvière."
->
+  description="Découvrez l'histoire, le staff et les boxeurs du Boxing Club Colak à La Louvière.">
 
   <section class="section-club first">
     <div class="container narrow reveal">
@@ -76,24 +106,25 @@ const boxeursAmateurs = [
   <section class="section-club alt">
     <div class="container">
       <div class="header-minimal">
-        <h2 class="title-label">NOS COACHES</h2>
+        <h2 class="title-label">LE STAFF</h2>
         <div class="header-line"></div>
       </div>
       
       <div class="coaches-grid">
-        {coaches.map(coach => (
+        {staff.map(membre => (
           <div class="coach-card reveal">
             <div class="coach-image-wrapper">
               <img 
-                src={coach.image} 
-                alt={coach.nom} 
-                class={coach.nom === "Mirac Colak" ? "img-contain" : "img-cover"}
+                src={membre.image} 
+                alt={membre.nom} 
+                class="staff-img-id"
+                style={membre.customPos || ""} 
               />
             </div>
             <div class="coach-info">
-              <h3>{coach.nom}</h3>
-              <p class="coach-role">{coach.role}</p>
-              <p class="coach-desc">{coach.description}</p>
+              <h3>{membre.nom}</h3>
+              <p class="coach-role">{membre.role}</p>
+              <p class="coach-desc">{membre.description}</p>
             </div>
           </div>
         ))}
@@ -147,7 +178,7 @@ const boxeursAmateurs = [
 <style>
   /* CONFIGURATION GÉNÉRALE */
   .section-club { padding: 100px 0; }
-  .section-club.first { padding-top: 180px; } /* Protection contre le header absolute */
+  .section-club.first { padding-top: 180px; }
   .section-club.alt { background: rgba(199, 157, 49, 0.03); }
   
   .container { max-width: 1400px; margin: 0 auto; padding: 0 5%; }
@@ -189,10 +220,10 @@ const boxeursAmateurs = [
   }
   .history-content strong { color: #fff; }
 
-  /* COACHES */
+  /* STAFF (COACHES GRID) */
   .coaches-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
     gap: 40px;
   }
 
@@ -204,12 +235,18 @@ const boxeursAmateurs = [
   .coach-card:hover { border-color: var(--color-accent); transform: translateY(-10px); }
 
   .coach-image-wrapper {
-    height: 500px;
+    height: 480px;
     background: #000;
     overflow: hidden;
   }
-  .img-contain { width: 100%; height: 100%; object-fit: contain; }
-  .img-cover { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+
+  /* Style de base pour les images du staff */
+  .staff-img-id {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%; /* Valeur par défaut pour Pierre et les autres */
+  }
 
   .coach-info { padding: 40px; }
   .coach-info h3 { color: #fff; margin-bottom: 10px; font-size: 2rem; letter-spacing: 1px; }
