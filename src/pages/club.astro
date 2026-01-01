@@ -1,0 +1,280 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Données des Coaches
+const coaches = [
+  {
+    nom: "Mirac Colak",
+    role: "Entraîneur Principal",
+    description: "Référent technique et physique du club, il dirige la préparation des compétiteurs et des professionnels pour les mener vers l'excellence du haut niveau.",
+    image: "/mirac.jpeg" 
+  },
+  {
+    nom: "Carmello Pirrello",
+    role: "Entraîneur des débutants et récréants",
+    description: "Passionné par la transmission des bases du noble art, il accompagne les nouveaux membres et les pratiquants loisirs dans leur apprentissage et leur progression constante.",
+    image: "/carmelo.JPG"
+  }
+];
+
+// Données des Boxeurs Professionnels
+const boxeursPro = [
+  {
+    nom: "Benito Muyayi",
+    categorie: "Welter",
+    palmares: "6-0-0 (4KO's)",
+    image: "/beni.jpeg"
+  },
+  {
+    nom: "Antonio D'Urbano",
+    categorie: "Superlight Weight",
+    palmares: "3-0-0",
+    image: "/toni.jpeg"
+  }
+];
+
+// Données des Boxeurs Amateurs
+const boxeursAmateurs = [
+  { nom: "Joël Adingara", categorie: "Amateur", image: "" },
+  { nom: "Jordan Midongs", categorie: "Amateur", image: "/jojo.jpeg" },
+  { nom: "Kelson Impérial", categorie: "Amateur", image: "/kelson.jpeg" },
+  { nom: "Yesna Kasin", categorie: "Amateur", image: "/yesna.jpeg" },
+  { nom: "Randy Konde", categorie: "Amateur", image: "/randy.jpeg" },
+  { nom: "Murat Kulaksiz", categorie: "Amateur", image: "/murat.jpeg" },
+  { nom: "Anselme Kabala", categorie: "Amateur", image: "/ace.jpeg" },
+  { nom: "Aïssa Benmaamar", categorie: "Amateur", image: "/aisa.jpeg" },
+  { nom: "Yoan Kamkom", categorie: "Amateur", image: "/yoan.jpeg" },
+  { nom: "Massimo Alaimo", categorie: "Amateur", image: "/massimo.jpeg" },
+  { nom: "Carlo D'Aleo", categorie: "Amateur", image: "/carlo.jpeg" },
+  { nom: "Luigi Donzella", categorie: "Amateur", image: "/marseille.jpeg" }
+];
+---
+
+<BaseLayout 
+  title="Le Club — BOXING Club COLAK" 
+  description="Découvrez l'histoire, les coaches et les boxeurs du Boxing Club Colak à La Louvière."
+>
+
+  <section class="section-club first">
+    <div class="container narrow">
+      <h1 class="page-title">L'Histoire du Club</h1>
+      <div class="history-content">
+        <p>
+          Fondé avec la passion du noble art, le <strong>Boxing Club COLAK</strong> est né d'une volonté simple : 
+          offrir un cadre de progression rigoureux à La Louvière. Depuis sa création, le club a formé 
+          de nombreux athlètes en mettant l'accent sur la discipline et le respect.
+        </p>
+        <p>
+          Plus qu'une salle de sport, c'est un lieu où l'on forge le caractère autant que le physique. 
+          Notre héritage repose sur le travail acharné et la transmission des valeurs de la boxe anglaise.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-club alt">
+    <div class="container">
+      <h2 class="section-title text-center">Nos Coaches</h2>
+      <div class="coaches-grid">
+        {coaches.map(coach => (
+          <div class="coach-card">
+            <div class="coach-image-wrapper">
+              <img 
+                src={coach.image} 
+                alt={coach.nom} 
+                style={
+                  coach.nom === "Mirac Colak"
+                    ? "width:100%; height:100%; object-fit:contain;"
+                    : "width:100%; height:100%; object-fit:cover; object-position:center 30%;"
+                } 
+              />
+            </div>
+            <div class="coach-info">
+              <h3>{coach.nom}</h3>
+              <p class="coach-role">{coach.role}</p>
+              <p>{coach.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-club">
+    <div class="container">
+      <h2 class="section-title text-center">Nos Boxeurs</h2>
+
+      <h3 class="roster-category">Section Professionnelle</h3>
+      <div class="boxeurs-grid">
+        {boxeursPro.map(b => (
+          <div class="fighter-card pro">
+            <img
+              src={b.image}
+              alt={b.nom}
+              style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"
+            />
+            <div class="fighter-overlay">PRO</div>
+            <div class="fighter-info">
+              <h4>{b.nom}</h4>
+              <span>{b.categorie}</span>
+              <p class="palmares">{b.palmares}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="roster-category">Section Amateurs</h3>
+      <div class="boxeurs-grid">
+        {boxeursAmateurs.map(b => (
+          <div class="fighter-card">
+            {b.image ? (
+              <img
+                src={b.image}
+                alt={b.nom}
+                style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"
+              />
+            ) : (
+              <div class="placeholder-img" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:#111; color:#333; font-weight:bold;">PHOTO À VENIR</div>
+            )}
+            <div class="fighter-info">
+              <h4>{b.nom}</h4>
+              <span>{b.categorie}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ================================================= */
+  /* STRUCTURE GÉNÉRALE                                */
+  /* ================================================= */
+  .section-club {
+    padding: 100px 0;
+  }
+  .section-club.first { padding-top: 150px; }
+  .section-club.alt { background: rgba(199, 157, 49, 0.05); }
+  
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .container.narrow { max-width: 800px; }
+  .text-center { text-align: center; }
+
+  .page-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-title, #f9d77a);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    font-family: var(--font-accent);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    color: var(--color-title, #f9d77a);
+    margin-bottom: 60px;
+    text-transform: uppercase;
+  }
+
+  /* ================================================= */
+  /* HISTOIRE                                          */
+  /* ================================================= */
+  .history-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 24px;
+    color: var(--color-text, #fff);
+    opacity: 0.9;
+  }
+
+  /* ================================================= */
+  /* COACHES                                           */
+  /* ================================================= */
+  .coaches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+  }
+
+  .coach-card {
+    background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(199,157,49,0.1) 100%);
+    border: 1px solid rgba(199,157,49,0.3);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .coach-card:hover { transform: translateY(-10px); }
+
+  .coach-image-wrapper {
+    height: 400px;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .coach-info { padding: 30px; }
+  .coach-info h3 { color: var(--color-title, #f9d77a); margin-bottom: 10px; font-size: 1.5rem; }
+  .coach-role { color: var(--color-accent, #c79d31); font-weight: bold; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 15px; }
+
+  /* ================================================= */
+  /* BOXEURS                                           */
+  /* ================================================= */
+  .roster-category {
+    font-size: 1.5rem;
+    color: var(--color-accent, #c79d31);
+    border-left: 4px solid var(--color-accent, #c79d31);
+    padding-left: 15px;
+    margin: 60px 0 30px;
+    text-transform: uppercase;
+  }
+
+  .boxeurs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .fighter-card {
+    aspect-ratio: 3/4;
+    background: #0a0a0a;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .fighter-card.pro { border-color: var(--color-title, #f9d77a); }
+
+  .fighter-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--color-title, #f9d77a);
+    color: #000;
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    z-index: 2;
+  }
+
+  .fighter-info {
+    width: 100%;
+    padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+    z-index: 1;
+    position: relative;
+  }
+
+  .fighter-info h4 { margin-bottom: 5px; font-size: 1.2rem; color: #fff; }
+  .fighter-info span { color: var(--color-accent, #c79d31); font-size: 0.85rem; font-weight: bold; }
+  .palmares { font-size: 0.8rem; margin-top: 10px; opacity: 0.8; color: #fff; }
+
+  @media (max-width: 768px) {
+    .section-club { padding: 60px 0; }
+    .coaches-grid { grid-template-columns: 1fr; }
+    .boxeurs-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  }
+</style>

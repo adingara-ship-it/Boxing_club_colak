@@ -1,0 +1,185 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const clubName = "BOXING Club COLAK";
+const adresseClub = "Rue de l'Olive 13A, 7100 La Louvière";
+const clubEmail = "mirac.colak@outlook.com";
+const clubPhone = "0487 11 88 77";
+const clubPhoneValue = "+32487118877";
+
+const subjects = [
+  "Séance d'essai gratuite",
+  "Inscription (Novice / Loisir)",
+  "Inscription (Compétiteur)",
+  "Question générale",
+  "Partenariat / Presse"
+];
+---
+
+<BaseLayout 
+  title={`Contact — ${clubName}`}
+  description="Contactez le Boxing Club Colak à La Louvière pour une séance d'essai ou toute demande d'information."
+>
+
+<section class="contact-hero">
+  <div class="container">
+    <h1 class="page-title">Contactez-nous</h1>
+    <p class="hero-subtitle">Prêt à monter sur le ring ? Envoyez-nous un message ou passez nous voir directement au club.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+      
+      <div class="contact-info-wrapper">
+        <div class="info-card">
+          <h2 class="info-title">Nos coordonnées</h2>
+          
+          <div class="info-item">
+            <span class="info-label">Adresse</span>
+            <p>{adresseClub}</p>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">Téléphone</span>
+            <p><a href={`tel:${clubPhoneValue}`} class="link">{clubPhone}</a></p>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">E-mail</span>
+            <p><a href={`mailto:${clubEmail}`} class="link">{clubEmail}</a></p>
+          </div>
+        </div>
+
+        <div class="social-card">
+          <h2 class="info-title">Suivez-nous</h2>
+          <div class="social-links">
+            <a href="https://www.instagram.com/boxing.club.colak/" target="_blank" rel="noopener noreferrer" class="social-btn">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=100089497443998" target="_blank" rel="noopener noreferrer" class="social-btn">Facebook</a>
+            <a href="https://www.tiktok.com/@boxing.club.colak" target="_blank" rel="noopener noreferrer" class="social-btn">TikTok</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-wrapper">
+        <form id="contact-form" class="contact-form">
+          <div class="form-group-row">
+            <div class="form-group">
+              <label for="name">Nom complet</label>
+              <input type="text" id="name" name="name" placeholder="Ex: Jean Dupont" required />
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" placeholder="votre@email.com" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">Sujet de votre demande</label>
+            <select id="subject" name="subject">
+              {subjects.map(s => (
+                <option value={s}>{s}</option>
+              ))}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" placeholder="Comment pouvons-nous vous aider ?" required></textarea>
+          </div>
+
+          <button type="submit" id="submit-btn" class="cta-button full-width">Envoyer le message</button>
+          <p id="form-status" class="form-status-msg"></p>
+        </form>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2541.536962254714!2d4.137838576884021!3d50.43105788874134!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c23063f45c8465%3A0xc3f6050b11c7f991!2sRue%20de%20l'Olive%2013%2C%207100%20La%20Louvi%C3%A8re!5e0!3m2!1sfr!2sbe!4v1700000000000!5m2!1sfr!2sbe" 
+        width="100%" 
+        height="450" 
+        style="border:0;" 
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+</BaseLayout>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script is:inline>
+  (function() {
+    emailjs.init("mAR7_JuiRBmmhJtuq");
+  })();
+
+  const contactForm = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const statusMsg = document.getElementById('form-status');
+
+  contactForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    submitBtn.innerText = "Envoi en cours...";
+    submitBtn.disabled = true;
+
+    emailjs.sendForm('service_yf1ji1g', 'template_0clvoqw', this)
+      .then(function() {
+        statusMsg.innerText = "Message envoyé avec succès ! Le coach vous répondra bientôt.";
+        statusMsg.style.color = "#c79d31";
+        contactForm.reset();
+        submitBtn.innerText = "Envoyer le message";
+        submitBtn.disabled = false;
+      }, function(error) {
+        statusMsg.innerText = "Erreur lors de l'envoi. Veuillez réessayer plus tard.";
+        statusMsg.style.color = "#ff4d4d";
+        submitBtn.innerText = "Réessayer";
+        submitBtn.disabled = false;
+      });
+  });
+</script>
+
+<style>
+  .contact-hero { padding: 150px 0 60px; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); text-align: center; }
+  .page-title { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--color-title, #f9d77a); text-transform: uppercase; font-family: var(--font-accent); margin-bottom: 20px; }
+  .hero-subtitle { max-width: 600px; margin: 0 auto; font-size: 1.1rem; opacity: 0.8; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; margin-top: 40px; }
+
+  .info-card, .social-card { background: rgba(199, 157, 49, 0.05); border: 1px solid rgba(199, 157, 49, 0.2); padding: 40px; margin-bottom: 30px; }
+  .info-title { font-family: var(--font-accent); color: var(--color-accent, #c79d31); text-transform: uppercase; font-size: 1.4rem; margin-bottom: 30px; letter-spacing: 1px; }
+  .info-item { margin-bottom: 24px; }
+  .info-label { display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--color-accent, #c79d31); letter-spacing: 2px; margin-bottom: 5px; }
+  .info-item p { font-size: 1.1rem; }
+
+  .link { color: #fff; text-decoration: none; transition: 0.3s; }
+  .link:hover { color: var(--color-accent, #c79d31); }
+  .social-links { display: flex; gap: 15px; flex-wrap: wrap; }
+  .social-btn { padding: 8px 16px; border: 1px solid rgba(255,255,255,0.1); color: #fff; text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+  .social-btn:hover { background: var(--color-accent, #c79d31); color: #000; }
+
+  .form-wrapper { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; }
+  .contact-form { display: flex; flex-direction: column; gap: 24px; }
+  .form-group-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-group label { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
+  
+  input, select, textarea { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); padding: 14px; color: #fff; font-family: inherit; transition: 0.3s; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--color-accent, #c79d31); background: rgba(199, 157, 49, 0.05); }
+
+  .cta-button { background: var(--color-accent, #c79d31); color: #000; padding: 18px; border: none; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+  .cta-button:hover { background: var(--color-title, #f9d77a); transform: translateY(-2px); }
+  
+  .form-status-msg { margin-top: 15px; font-size: 0.9rem; font-weight: 500; }
+
+  .map-container { margin-top: 60px; border: 1px solid rgba(199, 157, 49, 0.3); border-radius: 4px; overflow: hidden; line-height: 0; }
+  .map-container iframe { filter: grayscale(1) invert(0.9) contrast(1.2); }
+
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .form-group-row { grid-template-columns: 1fr; }
+  }
+</style>

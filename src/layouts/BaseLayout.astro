@@ -1,0 +1,271 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  schema?: string;
+}
+
+const {
+  title = "BOXING Club COLAK",
+  description = "Club de boxe anglaise à La Louvière – discipline, encadrement et progression.",
+  schema,
+} = Astro.props;
+
+const navLinks = [
+  { href: "/", title: "Accueil" },
+  { href: "/club", title: "Le Club" },
+  { href: "/contact", title: "Contact" },
+];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, "");
+const currentYear = new Date().getFullYear();
+
+const phoneDisplay = "0487 11 88 77";
+const phoneValue = "+32487118877";
+const emailClub = "mirac.colak@outlook.com";
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <link rel="canonical" href={Astro.url.href} />
+    {schema && <script type="application/ld+json" set:html={schema} />}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bebas+Neue&display=swap"
+      rel="stylesheet"
+    />
+
+    <style is:global>
+      :root {
+        --header-height: 80px;
+        --color-accent: #c79d31;
+        --color-title: #f9d77a;
+        --color-text-muted: #a0a0a0;
+        --font-accent: 'Bebas Neue', sans-serif;
+        --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      @media (max-width: 768px) {
+        :root { --header-height: 70px; }
+      }
+
+      body.menu-open { overflow: hidden; }
+
+      /* --- HEADER & LOGO --- */
+      .site-header {
+        position: fixed; top: 0; width: 100%; height: var(--header-height);
+        z-index: 1100; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(199,157,49,0.2);
+      }
+      .header-wrapper { max-width: 1400px; height: 100%; margin: 0 auto; padding: 0 5%; display: flex; justify-content: space-between; align-items: center; }
+      .logo-container { height: 50px; display: block; position: relative; overflow: hidden; }
+      .logo-img { height: 100%; width: auto; display: block; }
+      
+      .desktop-only { display: flex; }
+      .nav-list { display: flex; gap: 3rem; list-style: none; padding: 0; }
+      .nav-link { font-family: var(--font-accent); font-size: 1.1rem; letter-spacing: 1px; color: #fff; text-decoration: none; text-transform: uppercase; transition: var(--transition-base); }
+      .nav-link:hover, .nav-link.active { color: var(--color-accent); }
+
+      /* --- FOOTER --- */
+      .site-footer { background: #050505; padding: 80px 0 0; border-top: 1px solid rgba(199, 157, 49, 0.1); color: #fff; }
+      .footer-container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+      .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+      .footer-logo { height: 65px; width: auto; margin-bottom: 25px; }
+      .footer-tagline { font-size: 1rem; line-height: 1.6; color: var(--color-text-muted); margin-bottom: 25px; max-width: 280px; }
+      .footer-socials { display: flex; gap: 20px; }
+      .social-link { font-size: 0.85rem; color: var(--color-accent); text-decoration: none; transition: 0.3s; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+      .footer-h3 { font-family: var(--font-accent); color: var(--color-title); letter-spacing: 2px; margin-bottom: 25px; text-transform: uppercase; font-size: 1.3rem; }
+      .footer-list { list-style: none; padding: 0; margin: 0; }
+      .footer-list li { margin-bottom: 14px; }
+      .footer-list a, .contact-item { color: var(--color-text-muted); text-decoration: none; transition: 0.3s; font-size: 0.95rem; line-height: 1.6; }
+      .footer-separator { height: 1px; background: linear-gradient(90deg, transparent, rgba(199,157,49,0.15), transparent); margin-bottom: 25px; }
+      .footer-legal { padding: 25px 0; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: rgba(160, 160, 160, 0.6); text-transform: uppercase; letter-spacing: 1px; }
+
+      @media (max-width: 992px) {
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 50px; }
+        .footer-brand { grid-column: span 2; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 40px; }
+      }
+
+      @media (max-width: 768px) {
+        .desktop-only { display: none; }
+        .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+        .footer-legal { flex-direction: column; align-items: center; gap: 15px; text-align: center; }
+      }
+
+      /* --- BANNIÈRE COOKIES SÉCURISÉE --- */
+      #cookie-banner {
+        position: fixed !important;
+        bottom: 20px !important;
+        left: 20px !important;
+        right: 20px !important;
+        width: auto !important;
+        max-width: 400px !important;
+        margin: 0 auto !important; 
+        background: #111 !important;
+        border: 1px solid var(--color-accent) !important;
+        padding: 20px !important;
+        border-radius: 12px !important;
+        z-index: 10000 !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.9) !important;
+        display: none; /* Changé de flex à none par défaut, le JS gère l'affichage */
+        flex-direction: column !important;
+      }
+      .cookie-content p { color: #fff !important; font-size: 0.85rem !important; margin-bottom: 15px !important; line-height: 1.4 !important; }
+      .cookie-buttons { display: flex !important; gap: 10px !important; width: 100% !important; }
+      .cookie-btn { flex: 1 !important; font-family: var(--font-accent) !important; padding: 12px !important; border-radius: 6px !important; cursor: pointer !important; text-transform: uppercase; font-size: 0.95rem !important; border: none !important; }
+      #accept-cookies { background: var(--color-accent) !important; color: #000 !important; font-weight: bold !important; }
+      #decline-cookies { background: #222 !important; color: #fff !important; }
+
+      @media (max-width: 480px) {
+        .cookie-buttons { flex-direction: column !important; }
+      }
+
+      /* --- BOUTON MENU MOBILE --- */
+      .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+      }
+      @media (max-width: 768px) {
+        .mobile-menu-toggle { display: block; }
+      }
+      .burger-icon { width: 25px; height: 18px; position: relative; }
+      .burger-icon span { display: block; position: absolute; height: 2px; width: 100%; background: #fff; border-radius: 2px; }
+      .burger-icon span:nth-child(1) { top: 0; }
+      .burger-icon span:nth-child(2) { top: 8px; }
+      .burger-icon span:nth-child(3) { top: 16px; }
+    </style>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="header-wrapper">
+        <a href="/" class="logo-container">
+          <img src="/logo.png" alt="Club COLAK" class="logo-img" />
+        </a>
+
+        <nav class="main-nav desktop-only">
+          <ul role="list" class="nav-list">
+            {navLinks.map((link) => (
+              <li><a href={link.href} class:list={["nav-link", { active: currentPath === link.href }]}>{link.title}</a></li>
+            ))}
+          </ul>
+        </nav>
+
+        <button class="mobile-menu-toggle" id="menu-btn" aria-label="Menu">
+          <div class="burger-icon">
+            <span></span><span></span><span></span>
+          </div>
+        </button>
+      </div>
+    </header>
+
+    <div class="mobile-menu-overlay" id="mobile-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:2000; align-items:center; justify-content:center;">
+      <nav class="mobile-nav">
+        <ul role="list" style="list-style:none; text-align:center; padding:0;">
+          {navLinks.map((link) => (
+            <li style="margin: 20px 0;"><a href={link.href} style="font-family:var(--font-accent); font-size:2.5rem; color:#fff; text-decoration:none;">{link.title}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <main id="page">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-col footer-brand">
+            <img src="/logo.png" alt="Boxing Club COLAK" class="footer-logo" />
+            <p class="footer-tagline">Discipline. Encadrement. Progression.</p>
+            <div class="footer-socials">
+                <a href="https://www.facebook.com/profile.php?id=100089497443998" target="_blank" class="social-link">Facebook</a>
+                <a href="https://www.instagram.com/boxing.club.colak/" target="_blank" class="social-link">Instagram</a>
+            </div>
+          </div>
+
+          <div class="footer-col">
+            <h3 class="footer-h3">Navigation</h3>
+            <ul class="footer-list">
+              {navLinks.map(link => <li><a href={link.href}>{link.title}</a></li>)}
+              <li><a href="/#horaires">Horaires</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h3 class="footer-h3">Contact</h3>
+            <ul class="footer-list">
+              <li class="contact-item">Rue de l'Olive 13A,<br/>7100 La Louvière</li>
+              <li class="contact-item"><a href={`tel:${phoneValue}`} style="color: inherit;">{phoneDisplay}</a></li>
+              <li class="contact-item"><a href={`mailto:${emailClub}`} style="color: inherit;">{emailClub}</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-separator"></div>
+
+        <div class="footer-legal">
+          <p>© {currentYear} <strong>Boxing Club COLAK</strong>. Tous droits réservés.</p>
+          <p><a href="/politique-de-confidentialite" style="color: inherit; text-decoration: underline;">Politique de confidentialité</a></p>
+          <p>Design par <a href="https://aawebdesign.dev/" target="_blank" style="color: var(--color-accent);">A&A WEB DESIGN</a></p>
+        </div>
+      </div>
+    </footer>
+
+    <div id="cookie-banner">
+      <div class="cookie-content">
+        <p>Ce site utilise des cookies pour analyser le trafic. <a href="/politique-de-confidentialite" style="color: var(--color-accent);">En savoir plus</a>.</p>
+        <div class="cookie-buttons">
+          <button id="decline-cookies" class="cookie-btn">Refuser</button>
+          <button id="accept-cookies" class="cookie-btn">Accepter</button>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline>
+      // Menu Mobile
+      const menuBtn = document.getElementById('menu-btn');
+      const overlay = document.getElementById('mobile-overlay');
+      menuBtn?.addEventListener('click', () => {
+        const isOpen = overlay.style.display === 'flex';
+        overlay.style.display = isOpen ? 'none' : 'flex';
+        document.body.classList.toggle('menu-open');
+      });
+
+      // Cookies
+      const banner = document.getElementById('cookie-banner');
+      const acceptBtn = document.getElementById('accept-cookies');
+      const declineBtn = document.getElementById('decline-cookies');
+
+      if (banner && !localStorage.getItem('cookie-consent')) {
+        banner.style.display = 'flex';
+      } else {
+        banner.style.display = 'none';
+      }
+
+      acceptBtn?.addEventListener('click', () => {
+        localStorage.setItem('cookie-consent', 'accepted');
+        banner.style.display = 'none';
+      });
+
+      declineBtn?.addEventListener('click', () => {
+        localStorage.setItem('cookie-consent', 'declined');
+        banner.style.display = 'none';
+      });
+    </script>
+  </body>
+</html>

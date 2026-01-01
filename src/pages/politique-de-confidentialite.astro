@@ -1,0 +1,153 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Ce fichier doit être placé dans src/pages/politique-de-confidentialite.astro
+---
+
+<BaseLayout 
+  title="Politique de Confidentialité | Boxing Club COLAK" 
+  description="Informations sur la gestion de vos données personnelles par le Boxing Club COLAK à La Louvière.">
+  
+  <section class="section">
+    <div class="container narrow mt-xl">
+      <span class="section-label">Cadre Légal</span>
+      <h1 class="section-title">Politique de Confidentialité</h1>
+      
+      <div class="legal-content">
+        <p class="last-update">Dernière mise à jour : 18 décembre 2025</p>
+
+        <p class="intro">
+          Le <strong>Boxing Club COLAK</strong> accorde une grande importance à la protection de votre vie privée. 
+          Cette page vous explique de manière transparente quelles données nous collectons via notre site et comment nous les utilisons.
+        </p>
+
+        <div class="legal-grid">
+          <article class="legal-card">
+            <h3>1. Responsable du traitement</h3>
+            <p>
+              Le responsable du traitement des données est le Boxing Club COLAK, situé à Rue de l'Olive 13A, 7100 La Louvière. 
+              Pour toute question, vous pouvez nous contacter à : <strong>mirac.colak@outlook.com</strong>.
+            </p>
+          </article>
+
+          <article class="legal-card">
+            <h3>2. Quelles données collectons-nous ?</h3>
+            <ul>
+              <li>
+                <strong>Données de statistiques :</strong> Nous utilisons Google Analytics pour mesurer l'audience du site (nombre de visites, pages les plus vues). Ces données sont anonymes.
+              </li>
+              <li>
+                <strong>Données de contact :</strong> Lorsque vous utilisez notre formulaire de contact, nous collectons les informations que vous saisissez (Nom, Email, Téléphone, Message).
+              </li>
+            </ul>
+          </article>
+
+          <article class="legal-card">
+            <h3>3. Pourquoi collectons-nous ces données ?</h3>
+            <p>Nous utilisons vos données uniquement pour :</p>
+            <ul>
+              <li>Répondre à vos questions et demandes d'inscription.</li>
+              <li>Améliorer l'expérience utilisateur sur notre site web.</li>
+            </ul>
+            <p><strong>Note :</strong> Nous ne vendons, ne louons et ne partageons jamais vos données avec des entreprises tierces à des fins commerciales.</p>
+          </article>
+
+          <article class="legal-card">
+            <h3>4. Cookies</h3>
+            <p>
+              Le site utilise des cookies pour son bon fonctionnement et pour les statistiques. Vous pouvez accepter ou refuser ces cookies via la bannière qui s'affiche lors de votre première visite.
+            </p>
+          </article>
+
+          <article class="legal-card">
+            <h3>5. Vos droits</h3>
+            <p>
+              Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. 
+              Pour exercer ce droit, envoyez simplement un mail à <strong>mirac.colak@outlook.com</strong>.
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <div class="back-home">
+        <a href="/" class="cta-button cta-small">Retour à l'accueil</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-content {
+    margin-top: 50px;
+    line-height: 1.8;
+  }
+
+  .last-update {
+    font-style: italic;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .intro {
+    font-size: 1.15rem;
+    margin-bottom: 3rem;
+    color: var(--color-text);
+  }
+
+  .legal-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .legal-card {
+    border-left: 2px solid var(--color-accent);
+    padding-left: 25px;
+  }
+
+  h3 {
+    font-family: var(--font-accent);
+    color: var(--color-title);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 15px 0;
+  }
+
+  ul li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+
+  ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+  }
+
+  strong {
+    color: var(--color-title);
+  }
+
+  .back-home {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(199, 157, 49, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    .legal-card {
+      padding-left: 15px;
+    }
+    h3 {
+      font-size: 1.4rem;
+    }
+  }
+</style>
