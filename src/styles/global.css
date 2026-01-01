@@ -2,8 +2,9 @@
 /* VARIABLES & RESET                                 */
 /* ================================================= */
 :root {
-  --color-bg: #030303; /* Noir profond */
-  --color-accent: #c79d31; /* Or */
+  --color-bg: #030303;
+  --color-accent: #c79d31;
+  --color-accent-soft: rgba(199, 157, 49, 0.15);
   --color-title: #ffffff;
   --color-text: #ffffff;
   --color-text-muted: #888888;
@@ -30,10 +31,9 @@ body {
   font-family: var(--font-text);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
-/* Texture de grain pour habiller le fond noir */
+/* Texture de grain subtile */
 body::after {
   content: '';
   position: fixed;
@@ -46,7 +46,7 @@ body::after {
 
 .container {
   width: 100%;
-  max-width: 1600px; /* Largeur maximale importante pour éviter l'effet "boîte" */
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 5%;
 }
@@ -58,16 +58,14 @@ body::after {
 h1, h2, h3 { 
   font-family: var(--font-accent); 
   text-transform: uppercase; 
-  line-height: 0.9; 
+  line-height: 1; 
 }
 
 a { text-decoration: none; color: inherit; transition: var(--transition); }
 
-/* Effet de contour pour le texte */
 .text-stroke {
   color: transparent;
   -webkit-text-stroke: 1px rgba(255,255,255,0.4);
 }
 
-/* Utilitaires */
 ul { list-style: none; }

@@ -83,7 +83,7 @@ const schema = JSON.stringify(localBusinessSchema);
           <a href="/contact?sujet=essai" class="btn-main">
             SÉANCE D’ESSAI
           </a>
-          <a href="#horaires" class="btn-secondary">VOIR LE PLANNING</a>
+          <a href="#horaires" class="btn-secondary-link">VOIR LE PLANNING</a>
         </div>
       </div>
 
@@ -111,270 +111,200 @@ const schema = JSON.stringify(localBusinessSchema);
     </div>
   </section>
 
-  <section class="section">
+  <section class="section-intro">
     <div class="container">
-      <div class="grid-split">
-        <h2 class="section-title">Un cadre clair,<br/>des profils motivés</h2>
-        <div class="section-content">
+      <div class="intro-grid">
+        <h2 class="title-premium">Un cadre clair,<br/>des profils motivés</h2>
+        <div class="text-premium">
           <p>Débutant complet, pratiquant loisir ou compétiteur : chacun a sa place, à condition de respecter le cadre.</p>
-          <p style="margin-top:20px;"><strong>Ponctualité, discipline et engagement ne sont pas négociables.</strong></p>
+          <p class="bold">Ponctualité, discipline et engagement ne sont pas négociables.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section alt" id="news">
+  <section class="section-news alt" id="news">
     <div class="container">
-      <div class="section-header">
-        <h2 class="section-title small">Actualités & Annonces</h2>
+      <div class="header-flex">
+        <h2 class="section-title-small">Actualités</h2>
+        <div class="line"></div>
       </div>
       
-      <div class="annonces-list">
+      <div class="news-grid">
         {
           annoncesAirtable.length > 0 ? (
             annoncesAirtable.map((a) => (
-              <article class={`annonce-row ${a.fields.Urgent ? "urgent" : ""}`}>
+              <article class={`news-card ${a.fields.Urgent ? "is-urgent" : ""}`}>
                 {a.fields.Image && a.fields.Image[0] && (
-                  <div class="annonce-img-container">
-                    <img
-                      src={a.fields.Image[0].url}
-                      alt={a.fields.Titre}
-                      loading="lazy"
-                      class="clickable-img"
-                    />
-                    <div class="zoom-overlay" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        <line x1="11" y1="8" x2="11" y2="14"></line>
-                        <line x1="8" y1="11" x2="14" y2="11"></line>
-                      </svg>
-                    </div>
+                  <div class="news-img-box">
+                    <img src={a.fields.Image[0].url} alt={a.fields.Titre} class="clickable-img" />
+                    {a.fields.Urgent && <span class="badge-urgent">URGENT</span>}
                   </div>
                 )}
-
-                <div class="annonce-body">
-                  <div class="annonce-header">
-                    <span class="date">{format(new Date(a.createdTime), "dd MMMM", { locale: fr })}</span>
-                    {a.fields.Urgent && <span class="tag-urgent">URGENT</span>}
-                  </div>
+                <div class="news-info">
+                  <span class="news-date">{format(new Date(a.createdTime), "dd MMM yyyy", { locale: fr })}</span>
                   <h3>{a.fields.Titre}</h3>
-                  <p class="message">{a.fields.Message}</p>
+                  <p>{a.fields.Message}</p>
                 </div>
               </article>
             ))
           ) : (
-            <p style="color: #666;">Aucune annonce pour le moment.</p>
+            <p class="empty-msg">Aucune annonce pour le moment.</p>
           )
         }
       </div>
     </div>
   </section>
 
-  <div id="custom-lightbox" class="custom-lightbox" style="display: none;">
-    <span class="close-lightbox" aria-label="Fermer">×</span>
-    <img id="lightbox-img" src="" alt="" />
-  </div>
-
-  <section class="section" id="horaires">
+  <section class="section-schedule" id="horaires">
     <div class="container">
-      <h2 class="section-title">Planning d'entraînement</h2>
-      <div class="schedule">
-        <table class="schedule-table">
-          <thead>
-            <tr>
-              <th>Jour</th>
-              <th>Type de séance</th>
-              <th>Heure</th>
-            </tr>
-          </thead>
-          <tbody>
-            {horaires.map((h) => (
-              <tr>
-                <td class="td-day">{h.jour}</td>
-                <td class="td-type">{h.type}</td>
-                <td class="td-time">{h.heure}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <h2 class="section-title-center">Planning d'entraînement</h2>
+      
+      <div class="schedule-list">
+        {horaires.map((h) => (
+          <div class="schedule-item">
+            <div class="item-day">{h.jour}</div>
+            <div class="item-content">
+              <span class="item-type">{h.type}</span>
+              <span class="item-time">{h.heure}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="section alt">
+  <section class="section-contact alt">
     <div class="container">
-      <div class="grid-split">
-        <div>
-          <h2 class="section-title">Nous trouver</h2>
-          <address class="address">
+      <div class="contact-grid">
+        <div class="contact-text">
+          <h2 class="title-premium">Nous trouver</h2>
+          <address>
             {adresseClub}<br />
-            <a href={`tel:${clubPhone.replace(/\s/g, "")}`} class="contact-link">{clubPhone}</a><br />
-            <a href={`mailto:${clubEmail}`} class="contact-link">{clubEmail}</a>
+            <a href={`tel:${clubPhone.replace(/\s/g, "")}`} class="gold-link">{clubPhone}</a><br />
+            <a href={`mailto:${clubEmail}`} class="gold-link">{clubEmail}</a>
           </address>
         </div>
-        <div class="map">
+        <div class="contact-map">
           <iframe
-            width="100%"
-            height="350"
-            style="border:0; filter: grayscale(1) invert(0.9) contrast(1.2);"
-            src="https://maps.google.com/maps?q=Rue%20de%20l'Olive%2013A,%207100%20La%20Louvi%C3%A8re&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            allowfullscreen=""
-            loading="lazy"
+            width="100%" height="300" style="border:0; filter: grayscale(1) invert(0.9);"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2543.123456789!2d4.143210!3d50.476543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDI4JzM1LjUiTiA0wrAwOCczNS42IkU!5e0!3m2!1sfr!2sbe!4v12345678903"
+            allowfullscreen="" loading="lazy"
           />
         </div>
       </div>
     </div>
   </section>
 
+  <div id="custom-lightbox" class="custom-lightbox" style="display: none;">
+    <span class="close-lightbox">×</span>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
   <style>
-    /* --- HERO --- */
+    /* HERO AFFINÉ */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      background: #000;
-      overflow: hidden;
-      padding: 120px 0 80px;
+      min-height: 100vh; display: flex; align-items: center; position: relative;
+      background: #000; overflow: hidden; padding: 120px 0 80px;
     }
-    .hero-decor-line {
-      position: absolute; left: 5%; top: 0; bottom: 0;
-      width: 1px; background: rgba(199, 157, 49, 0.15);
-      z-index: 1;
-    }
-    .hero-bg-name {
-      position: absolute; right: -5vw; bottom: 0;
-      font-family: var(--font-accent); font-size: 24vw;
-      color: rgba(255,255,255,0.02); line-height: 0.8;
-      pointer-events: none; z-index: 0;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 0.7fr;
-      gap: 100px;
-      position: relative; z-index: 10;
-    }
-    .hero-main { padding-left: 40px; }
-    .hero-badge {
-      display: flex; align-items: center; gap: 15px;
-      font-family: var(--font-accent); color: var(--color-accent);
-      letter-spacing: 4px; font-size: 0.9rem; margin-bottom: 30px;
-    }
-    .hero-badge .line { width: 50px; height: 1px; background: var(--color-accent); }
-    .hero-title {
-      font-size: clamp(4rem, 14vw, 11rem);
-      margin-bottom: 50px;
-      line-height: 0.85;
-      color: #fff;
-    }
-    .hero-actions { display: flex; align-items: center; gap: 40px; }
+    .hero-decor-line { position: absolute; left: 5%; top: 0; bottom: 0; width: 1px; background: rgba(199,157,49,0.1); z-index: 1; }
+    .hero-bg-name { position: absolute; right: -5vw; bottom: 0; font-family: var(--font-accent); font-size: 24vw; color: rgba(255,255,255,0.02); line-height: 0.8; z-index: 0; }
+    
+    .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; position: relative; z-index: 10; }
+    .hero-badge { display: flex; align-items: center; gap: 12px; font-family: var(--font-accent); color: var(--color-accent); letter-spacing: 3px; font-size: 0.9rem; margin-bottom: 25px; }
+    .hero-badge .line { width: 40px; height: 1px; background: var(--color-accent); }
+    
+    .hero-title { font-size: clamp(3.5rem, 12vw, 10rem); margin-bottom: 40px; }
+    
+    .hero-actions { display: flex; align-items: center; gap: 30px; }
+    
+    /* Bouton plus élégant et moins massif sur mobile */
     .btn-main {
       background: var(--color-accent); color: #000;
-      padding: 25px 45px; font-family: var(--font-accent);
-      font-size: 1.5rem; letter-spacing: 1px;
-      box-shadow: 0 10px 30px rgba(199, 157, 49, 0.2);
+      padding: 18px 32px; font-family: var(--font-accent); font-size: 1.2rem;
+      letter-spacing: 1px; border: none; cursor: pointer;
     }
-    .btn-main:hover { background: #fff; transform: translateY(-5px); }
-    .btn-secondary {
-      font-family: var(--font-accent); font-size: 1.1rem;
-      color: #fff; border-bottom: 2px solid var(--color-accent);
-      padding-bottom: 5px; opacity: 0.7; letter-spacing: 1px;
-    }
-    .hero-details {
-      display: flex; flex-direction: column; justify-content: center;
-      border-left: 1px solid rgba(255,255,255,0.1); padding-left: 60px;
-    }
-    .manifesto { font-size: 1.2rem; color: #888; margin-bottom: 60px; line-height: 1.4; }
-    .manifesto .punchline { color: #fff; font-weight: 900; font-family: var(--font-accent); letter-spacing: 1px; font-size: 1.4rem; margin-top: 15px; }
-    .proof-points { display: flex; flex-direction: column; gap: 40px; }
-    .proof { display: flex; align-items: center; gap: 25px; }
-    .num { 
-      font-family: var(--font-accent); font-size: 1.5rem; color: var(--color-accent);
-      width: 60px; height: 60px; border: 1px solid rgba(199,157,49,0.4);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .txt { display: flex; flex-direction: column; }
-    .txt strong { font-family: var(--font-accent); font-size: 1.4rem; letter-spacing: 2px; color: #fff; }
-    .txt span { font-size: 0.85rem; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+    .btn-secondary-link { font-family: var(--font-accent); font-size: 1rem; color: #fff; border-bottom: 1px solid var(--color-accent); padding-bottom: 4px; opacity: 0.8; }
 
-    /* --- SECTIONS GÉNÉRALES --- */
-    .section { padding: 100px 0; }
-    .section.alt { background: #080808; }
-    .grid-split { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
-    .section-title { font-size: clamp(2.5rem, 6vw, 4rem); color: #fff; margin-bottom: 30px; }
-    .section-title.small { font-size: 1.5rem; letter-spacing: 3px; color: var(--color-accent); text-transform: uppercase; }
+    .hero-details { border-left: 1px solid rgba(255,255,255,0.05); padding-left: 40px; display: flex; flex-direction: column; justify-content: center; }
+    .manifesto { margin-bottom: 50px; color: #777; font-size: 1.1rem; }
+    .manifesto .punchline { color: #fff; font-family: var(--font-accent); font-size: 1.3rem; margin-top: 10px; letter-spacing: 1px; }
 
-    /* --- ANNONCES --- */
-    .annonce-row {
-      background: #111; border: 1px solid #222; margin-bottom: 30px;
-      display: flex; flex-direction: column; overflow: hidden;
+    .proof-points { display: flex; flex-direction: column; gap: 30px; }
+    .proof { display: flex; align-items: center; gap: 20px; }
+    .num { font-family: var(--font-accent); font-size: 1.4rem; color: var(--color-accent); width: 50px; height: 50px; border: 1px solid var(--color-accent-soft); display: flex; align-items: center; justify-content: center; }
+    .txt strong { font-family: var(--font-accent); font-size: 1.2rem; color: #fff; letter-spacing: 1px; }
+    .txt span { font-size: 0.8rem; color: #555; text-transform: uppercase; display: block; margin-top: 2px; }
+
+    /* SECTIONS TEXTE */
+    .section-intro { padding: 120px 0; }
+    .intro-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; }
+    .title-premium { font-size: clamp(2.2rem, 5vw, 3.5rem); color: #fff; line-height: 1.1; }
+    .text-premium { font-size: 1.15rem; color: #888; line-height: 1.7; }
+    .text-premium .bold { color: #fff; font-weight: 700; margin-top: 25px; }
+
+    /* ANNONCES CARDS */
+    .section-news { padding: 100px 0; background: #080808; }
+    .header-flex { display: flex; align-items: center; gap: 20px; margin-bottom: 50px; }
+    .section-title-small { font-size: 1.2rem; letter-spacing: 3px; color: var(--color-accent); }
+    .header-flex .line { flex-grow: 1; height: 1px; background: rgba(255,255,255,0.05); }
+
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+    .news-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+    .news-card:hover { border-color: var(--color-accent); transform: translateY(-5px); }
+    .news-img-box { height: 200px; position: relative; overflow: hidden; }
+    .news-img-box img { width: 100%; height: 100%; object-fit: cover; }
+    .badge-urgent { position: absolute; top: 15px; right: 15px; background: var(--color-accent); color: #000; font-family: var(--font-accent); padding: 4px 10px; font-size: 0.8rem; }
+    .news-info { padding: 25px; }
+    .news-date { color: var(--color-accent); font-family: var(--font-accent); font-size: 0.9rem; margin-bottom: 10px; display: block; }
+    .news-info h3 { font-size: 1.4rem; color: #fff; margin-bottom: 12px; }
+    .news-info p { color: #888; font-size: 0.95rem; line-height: 1.6; }
+
+    /* PLANNING MOBILE-FRIENDLY */
+    .section-schedule { padding: 100px 0; }
+    .section-title-center { text-align: center; font-size: 2.5rem; color: #fff; margin-bottom: 60px; }
+    .schedule-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+    .schedule-item { 
+      display: flex; align-items: center; padding: 25px; 
+      background: rgba(255,255,255,0.02); border-left: 3px solid var(--color-accent); 
     }
-    .annonce-img-container { height: 250px; position: relative; cursor: pointer; }
-    .annonce-img-container img { width: 100%; height: 100%; object-fit: cover; }
-    .zoom-overlay {
-      position: absolute; inset: 0; background: rgba(0,0,0,0.4);
-      display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s;
-    }
-    .annonce-img-container:hover .zoom-overlay { opacity: 1; }
-    .annonce-body { padding: 30px; }
-    .annonce-header { display: flex; gap: 15px; align-items: center; margin-bottom: 15px; }
-    .tag-urgent { background: var(--color-accent); color: #000; font-weight: 900; font-size: 0.75rem; padding: 4px 10px; }
-    .message { color: rgba(255,255,255,0.8); line-height: 1.7; }
+    .item-day { font-family: var(--font-accent); font-size: 1.8rem; color: var(--color-accent); width: 120px; flex-shrink: 0; }
+    .item-content { display: flex; flex-direction: column; gap: 4px; }
+    .item-type { color: #fff; font-weight: 600; font-size: 1rem; }
+    .item-time { color: #666; font-size: 0.9rem; }
 
-    /* --- PLANNING --- */
-    .schedule-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-    .schedule-table thead { display: none; }
-    .schedule-table tr { border-bottom: 1px solid #1a1a1a; }
-    .schedule-table td { padding: 25px 0; color: #fff; }
-    .td-day { font-family: var(--font-accent); font-size: 1.8rem; color: var(--color-accent); width: 25%; }
-    .td-time { font-weight: 700; text-align: right; }
+    /* CONTACT & MAP */
+    .section-contact { padding: 100px 0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .contact-text address { font-style: normal; color: #888; margin-top: 30px; line-height: 2; font-size: 1.1rem; }
+    .gold-link { color: var(--color-accent); font-weight: 700; }
+    .contact-map { border: 1px solid rgba(255,255,255,0.05); line-height: 0; border-radius: 4px; overflow: hidden; }
 
-    /* --- MAP & CONTACT --- */
-    .map { margin-top: 10px; border: 1px solid #222; border-radius: 4px; overflow: hidden; line-height: 0; }
-    .address { font-style: normal; color: #fff; line-height: 2; font-size: 1.1rem; }
-    .contact-link { color: var(--color-accent); font-weight: 700; text-decoration: none; }
+    /* LIGHTBOX */
+    .custom-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 3000; display: flex; align-items: center; justify-content: center; }
+    .custom-lightbox img { max-width: 90%; max-height: 80vh; border: 1px solid var(--color-accent); }
+    .close-lightbox { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 3rem; cursor: pointer; }
 
-    /* --- LIGHTBOX --- */
-    .custom-lightbox {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-      z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px;
-    }
-    .custom-lightbox img { max-width: 95%; max-height: 85vh; border: 1px solid var(--color-accent); }
-    .close-lightbox { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 40px; cursor: pointer; }
-
-    /* --- RESPONSIVE --- */
-    @media (min-width: 768px) {
-      .schedule-table thead { display: table-header-group; }
-      .schedule-table thead th { text-align: left; color: var(--color-accent); padding-bottom: 20px; border-bottom: 2px solid var(--color-accent); }
-      .schedule-table tr { display: table-row; }
-      .schedule-table td { display: table-cell; padding: 30px 15px; }
-      .td-time { text-align: left; }
-      .annonce-row { flex-direction: row; }
-      .annonce-img-container { width: 350px; height: auto; }
-    }
-
-    @media (max-width: 1024px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 70px; }
-      .hero-main { padding-left: 0; }
-      .hero-details { padding-left: 0; border-left: none; }
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+      .hero-grid, .intro-grid, .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+      .hero-main { padding: 0; }
+      .hero-details { border: none; padding: 0; }
       .hero-decor-line, .hero-bg-name { display: none; }
-      .grid-split { grid-template-columns: 1fr; gap: 40px; }
     }
-
     @media (max-width: 768px) {
-      .hero-title { font-size: 4.5rem; }
-      .hero-actions { flex-direction: column; align-items: stretch; gap: 25px; }
+      .hero-title { font-size: 3.8rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; gap: 20px; }
       .btn-main { text-align: center; }
-      .td-day { font-size: 1.4rem; }
+      .schedule-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .item-day { width: auto; font-size: 1.5rem; }
     }
 
-    .reveal { opacity: 0; transform: translateY(40px); transition: 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
   </style>
 
   <script is:inline>
-    // Reveal animation
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if(entry.isIntersecting) entry.target.classList.add('is-visible');
@@ -382,29 +312,20 @@ const schema = JSON.stringify(localBusinessSchema);
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Lightbox
+    // Lightbox simple
     const lightbox = document.getElementById("custom-lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
     const clickableImgs = document.querySelectorAll(".clickable-img");
-    const closeBtn = document.querySelector(".close-lightbox");
-
-    clickableImgs.forEach((img) => {
-      img.addEventListener("click", () => {
-        if (lightbox && lightboxImg) {
-          lightboxImg.src = img.src;
-          lightbox.style.display = "flex";
-          document.body.style.overflow = "hidden";
-        }
-      });
+    clickableImgs.forEach(img => {
+      img.onclick = () => {
+        lightboxImg.src = img.src;
+        lightbox.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
     });
-
-    const closeLightbox = () => {
-      if (!lightbox) return;
+    document.querySelector(".close-lightbox").onclick = () => {
       lightbox.style.display = "none";
       document.body.style.overflow = "auto";
-    };
-
-    lightbox?.addEventListener("click", (e) => { if(e.target === lightbox) closeLightbox(); });
-    closeBtn?.addEventListener("click", closeLightbox);
+    }
   </script>
 </BaseLayout>
