@@ -4,7 +4,6 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
 // --- CONFIGURATION AIRTABLE ---
-// En mode SSR, ces infos sont récupérées à chaque chargement de page
 const AIRTABLE_TOKEN = import.meta.env.AIRTABLE_TOKEN;
 const BASE_ID = import.meta.env.AIRTABLE_BASE_ID;
 const TABLE_NAME = import.meta.env.AIRTABLE_TABLE_NAME;
@@ -188,10 +187,13 @@ const schema = JSON.stringify(localBusinessSchema);
         </div>
         <div class="contact-map">
           <iframe
-            width="100%" height="300" style="border:0; filter: grayscale(1) invert(0.9);"
-            src="https://maps.google.com/maps?q=Rue%20de%20l'Olive%2013A,%207100%20La%20Louvi%C3%A8re&t=&z=15&ie=UTF8&iwloc=&output=embed"
-            allowfullscreen="" loading="lazy"
-          />
+            width="100%" 
+            height="300" 
+            style="border:0; filter: grayscale(1) invert(0.9) contrast(1.2);"
+            src="https://maps.google.com/maps?q=Rue%20de%20l'Olive%2013A%2C%207100%20La%20Louvi%C3%A8re&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            allowfullscreen="" 
+            loading="lazy"
+          ></iframe>
         </div>
       </div>
     </div>
