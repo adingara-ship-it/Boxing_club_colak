@@ -4,6 +4,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
 // --- CONFIGURATION AIRTABLE ---
+// En mode SSR, ces infos sont récupérées à chaque chargement de page
 const AIRTABLE_TOKEN = import.meta.env.AIRTABLE_TOKEN;
 const BASE_ID = import.meta.env.AIRTABLE_BASE_ID;
 const TABLE_NAME = import.meta.env.AIRTABLE_TABLE_NAME;
@@ -188,7 +189,7 @@ const schema = JSON.stringify(localBusinessSchema);
         <div class="contact-map">
           <iframe
             width="100%" height="300" style="border:0; filter: grayscale(1) invert(0.9);"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2543.123456789!2d4.143210!3d50.476543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDI4JzM1LjUiTiA0wrAwOCczNS42IkU!5e0!3m2!1sfr!2sbe!4v12345678903"
+            src="https://www.google.com/maps/embed/v1/place?key=VOTRE_CLE_ICI&q=Rue+de+l+Olive+13A,7100+La+Louviere"
             allowfullscreen="" loading="lazy"
           />
         </div>
@@ -202,7 +203,7 @@ const schema = JSON.stringify(localBusinessSchema);
   </div>
 
   <style>
-    /* HERO AFFINÉ */
+    /* HERO */
     .hero {
       min-height: 100vh; display: flex; align-items: center; position: relative;
       background: #000; overflow: hidden; padding: 120px 0 80px;
@@ -218,7 +219,6 @@ const schema = JSON.stringify(localBusinessSchema);
     
     .hero-actions { display: flex; align-items: center; gap: 30px; }
     
-    /* Bouton plus élégant et moins massif sur mobile */
     .btn-main {
       background: var(--color-accent); color: #000;
       padding: 18px 32px; font-family: var(--font-accent); font-size: 1.2rem;
@@ -232,7 +232,7 @@ const schema = JSON.stringify(localBusinessSchema);
 
     .proof-points { display: flex; flex-direction: column; gap: 30px; }
     .proof { display: flex; align-items: center; gap: 20px; }
-    .num { font-family: var(--font-accent); font-size: 1.4rem; color: var(--color-accent); width: 50px; height: 50px; border: 1px solid var(--color-accent-soft); display: flex; align-items: center; justify-content: center; }
+    .num { font-family: var(--font-accent); font-size: 1.4rem; color: var(--color-accent); width: 50px; height: 50px; border: 1px solid rgba(199,157,49,0.15); display: flex; align-items: center; justify-content: center; }
     .txt strong { font-family: var(--font-accent); font-size: 1.2rem; color: #fff; letter-spacing: 1px; }
     .txt span { font-size: 0.8rem; color: #555; text-transform: uppercase; display: block; margin-top: 2px; }
 
@@ -260,7 +260,7 @@ const schema = JSON.stringify(localBusinessSchema);
     .news-info h3 { font-size: 1.4rem; color: #fff; margin-bottom: 12px; }
     .news-info p { color: #888; font-size: 0.95rem; line-height: 1.6; }
 
-    /* PLANNING MOBILE-FRIENDLY */
+    /* PLANNING */
     .section-schedule { padding: 100px 0; }
     .section-title-center { text-align: center; font-size: 2.5rem; color: #fff; margin-bottom: 60px; }
     .schedule-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
@@ -312,7 +312,7 @@ const schema = JSON.stringify(localBusinessSchema);
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Lightbox simple
+    // Lightbox
     const lightbox = document.getElementById("custom-lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
     const clickableImgs = document.querySelectorAll(".clickable-img");
