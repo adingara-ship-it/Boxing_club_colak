@@ -1,24 +1,20 @@
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async ({ site }) => {
-  if (!site) {
-    return new Response("Missing site URL", { status: 500 });
-  }
-
   const pages = [
-    { path: "/", priority: "1.0" },
-    { path: "/club", priority: "0.7" },
-    { path: "/contact", priority: "0.7" },
-    { path: "/politique-de-confidentialite", priority: "0.7" },
+    "",
+    "club",
+    "contact",
+    "politique-de-confidentialite",
   ];
 
   const urls = pages
     .map(
       (page) => `
   <url>
-    <loc>${new URL(page.path, site).href}</loc>
+    <loc>${site}${page}</loc>
     <changefreq>weekly</changefreq>
-    <priority>${page.priority}</priority>
+    <priority>${page === "" ? "1.0" : "0.7"}</priority>
   </url>`
     )
     .join("");

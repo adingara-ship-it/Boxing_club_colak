@@ -4,9 +4,9 @@
   <div class="container cookie-content">
     <div class="cookie-text">
       <p>
-        <strong>Préférences de confidentialité</strong> <br />
-        Nous mémorisons votre choix en local pour ne pas vous reposer la question à chaque visite. 
-        Consultez notre <a href="/politique-de-confidentialite">politique de confidentialité</a>.
+        <strong>Respect de votre vie privée</strong> <br />
+        Nous utilisons des cookies pour améliorer votre expérience et analyser le trafic. 
+        En continuant, vous acceptez notre <a href="/politique-de-confidentialite">politique de confidentialité</a>.
       </p>
     </div>
     <div class="cookie-actions">
@@ -24,13 +24,11 @@
     transform: translateX(-50%);
     width: 90%;
     max-width: 600px;
-    background: rgba(14, 14, 14, 0.92);
-    border: 1px solid rgba(199, 157, 49, 0.35);
-    backdrop-filter: blur(8px);
-    border-radius: 10px;
+    background: #111;
+    border: 1px solid rgba(199, 157, 49, 0.3);
     padding: 25px;
     z-index: 9999;
-    box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     display: none; /* Géré par le JS */
   }
 
@@ -111,38 +109,20 @@
   const acceptBtn = document.getElementById('accept-cookies');
   const declineBtn = document.getElementById('decline-cookies');
 
-  const getStoredConsent = () => {
-    try {
-      return localStorage.getItem('cookie-consent');
-    } catch {
-      return null;
-    }
-  };
-
-  const storeConsent = (value) => {
-    try {
-      localStorage.setItem('cookie-consent', value);
-      window.dispatchEvent(new CustomEvent('cookie-consent-updated', { detail: value }));
-    } catch {
-      // Ignore storage errors in private mode or restricted browsers.
-    }
-  };
-
-  if (banner && acceptBtn && declineBtn) {
-    if (!getStoredConsent()) {
-      setTimeout(() => {
-        banner.classList.add('is-visible');
-      }, 2000);
-    }
-
-    acceptBtn.addEventListener('click', () => {
-      storeConsent('accepted');
-      banner.classList.remove('is-visible');
-    });
-
-    declineBtn.addEventListener('click', () => {
-      storeConsent('declined');
-      banner.classList.remove('is-visible');
-    });
+  // Vérifier si le choix a déjà été fait
+  if (!localStorage.getItem('cookie-consent')) {
+    setTimeout(() => {
+      banner.classList.add('is-visible');
+    }, 2000); // Apparaît après 2 secondes pour ne pas agresser l'utilisateur
   }
+
+  acceptBtn.addEventListener('click', () => {
+    localStorage.setItem('cookie-consent', 'accepted');
+    banner.classList.remove('is-visible');
+  });
+
+  declineBtn.addEventListener('click', () => {
+    localStorage.setItem('cookie-consent', 'declined');
+    banner.classList.remove('is-visible');
+  });
 </script>
