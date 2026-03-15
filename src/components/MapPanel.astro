@@ -1,0 +1,318 @@
+---
+import { clubInfo } from "../data/site";
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  detailsTitle?: string;
+}
+
+const {
+  title = "Nous trouver",
+  subtitle = "Le club est situé à La Louvière, avec un accès simple pour les pratiquants de la région du Centre.",
+  detailsTitle = "Informations pratiques",
+} = Astro.props;
+---
+
+<div class="map-panel">
+  <div class="map-copy">
+    <span class="map-kicker">Accès au club</span>
+    <h2>{title}</h2>
+    <p class="map-subtitle">{subtitle}</p>
+
+    <div class="map-details">
+      <div class="map-detail">
+        <span class="map-label">Adresse</span>
+        <p>{clubInfo.addressFull}</p>
+      </div>
+      <div class="map-detail">
+        <span class="map-label">Contact</span>
+        <p>
+          <a href={`tel:${clubInfo.phoneHref}`}>{clubInfo.phoneDisplay}</a><br />
+          <a href={`mailto:${clubInfo.email}`}>{clubInfo.email}</a>
+        </p>
+      </div>
+      <div class="map-detail">
+        <span class="map-label">{detailsTitle}</span>
+        <p>Ouvert en soirée du lundi au vendredi. Idéal pour une pratique régulière après la journée.</p>
+      </div>
+    </div>
+
+    <div class="map-actions">
+      <a href={clubInfo.googleDirectionsUrl} target="_blank" rel="noopener" class="map-btn map-btn-primary">
+        Itinéraire Google Maps
+      </a>
+      <a href={clubInfo.wazeUrl} target="_blank" rel="noopener" class="map-btn">
+        Ouvrir dans Waze
+      </a>
+    </div>
+  </div>
+
+  <div class="map-static" aria-hidden="true">
+    <div class="map-noise"></div>
+    <div class="map-route map-route-a"></div>
+    <div class="map-route map-route-b"></div>
+    <div class="map-route map-route-c"></div>
+    <div class="map-block map-block-a"></div>
+    <div class="map-block map-block-b"></div>
+    <div class="map-block map-block-c"></div>
+    <div class="map-pin"></div>
+
+    <div class="map-overlay-card">
+      <span class="map-label">Point de repère</span>
+      <p>{clubInfo.name}</p>
+      <small>{clubInfo.addressLine}, {clubInfo.postalCode} {clubInfo.city}</small>
+    </div>
+  </div>
+</div>
+
+<style>
+  .map-panel {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.94fr) minmax(320px, 1.06fr);
+    gap: 26px;
+    align-items: start;
+  }
+
+  .map-copy h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: #fff;
+    margin-bottom: 18px;
+  }
+
+  .map-kicker {
+    display: inline-flex;
+    margin-bottom: 14px;
+    color: var(--color-accent);
+    font-family: var(--font-accent);
+    font-size: 0.92rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .map-subtitle {
+    max-width: 40rem;
+    color: #b8b8b8;
+    font-size: 1.02rem;
+    line-height: 1.75;
+  }
+
+  .map-details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 26px;
+  }
+
+  .map-detail:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .map-detail {
+    padding: 18px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .map-label {
+    display: inline-flex;
+    margin-bottom: 8px;
+    color: var(--color-accent);
+    font-family: var(--font-accent);
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .map-detail p,
+  .map-detail a {
+    color: #f3f3f3;
+    line-height: 1.7;
+  }
+
+  .map-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 24px;
+  }
+
+  .map-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 18px;
+    border: 1px solid rgba(199, 157, 49, 0.34);
+    color: #fff;
+    font-family: var(--font-accent);
+    font-size: 0.98rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .map-btn:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  .map-btn-primary {
+    background: var(--color-accent);
+    color: #050505;
+  }
+
+  .map-static {
+    position: relative;
+    min-height: 430px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    background:
+      radial-gradient(circle at 20% 20%, rgba(199, 157, 49, 0.12), transparent 30%),
+      linear-gradient(160deg, rgba(18, 18, 18, 0.96), rgba(9, 9, 9, 0.98));
+  }
+
+  .map-noise {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, transparent 0 8%, rgba(255,255,255,0.02) 8% 10%, transparent 10% 30%, rgba(255,255,255,0.02) 30% 32%, transparent 32% 100%),
+      linear-gradient(180deg, transparent 0 18%, rgba(255,255,255,0.02) 18% 20%, transparent 20% 52%, rgba(255,255,255,0.02) 52% 54%, transparent 54% 100%);
+  }
+
+  .map-route {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+  }
+
+  .map-route-a {
+    width: 130%;
+    height: 18px;
+    top: 38%;
+    left: -8%;
+    transform: rotate(-12deg);
+  }
+
+  .map-route-b {
+    width: 115%;
+    height: 14px;
+    top: 58%;
+    left: -4%;
+    transform: rotate(8deg);
+  }
+
+  .map-route-c {
+    width: 18px;
+    height: 120%;
+    top: -8%;
+    left: 58%;
+  }
+
+  .map-block {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .map-block-a {
+    width: 26%;
+    height: 22%;
+    top: 16%;
+    left: 10%;
+  }
+
+  .map-block-b {
+    width: 18%;
+    height: 18%;
+    top: 46%;
+    left: 68%;
+  }
+
+  .map-block-c {
+    width: 22%;
+    height: 16%;
+    top: 66%;
+    left: 20%;
+  }
+
+  .map-pin {
+    position: absolute;
+    top: 48%;
+    left: 56%;
+    width: 28px;
+    height: 28px;
+    background: var(--color-accent);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 0 0 8px rgba(199, 157, 49, 0.12);
+  }
+
+  .map-pin::after {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border-radius: 50%;
+    background: #050505;
+  }
+
+  .map-overlay-card {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(8, 8, 8, 0.84);
+    backdrop-filter: blur(8px);
+  }
+
+  .map-overlay-card p {
+    color: #fff;
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+
+  .map-overlay-card small {
+    display: block;
+    margin-top: 8px;
+    color: #b8b8b8;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 960px) {
+    .map-panel {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .map-details {
+      grid-template-columns: 1fr;
+    }
+
+    .map-detail:last-child {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .map-actions {
+      flex-direction: column;
+    }
+
+    .map-btn {
+      width: 100%;
+    }
+
+    .map-static {
+      min-height: 320px;
+    }
+
+    .map-overlay-card {
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+    }
+  }
+</style>

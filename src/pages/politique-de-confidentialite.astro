@@ -1,68 +1,101 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import { clubInfo } from "../data/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const legalSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "PrivacyPolicy",
+  name: `Politique de confidentialité | ${clubInfo.name}`,
+  url: `${clubInfo.siteUrl}/politique-de-confidentialite`,
+});
 ---
 
-<BaseLayout 
-  title="Politique de Confidentialité | Boxing Club COLAK" 
-  description="Informations sur la gestion de vos données personnelles par le Boxing Club COLAK à La Louvière.">
-  
+<BaseLayout
+  title={`Politique de confidentialité | ${clubInfo.name}`}
+  description={`Informations sur la gestion des données personnelles sur le site du ${clubInfo.name}.`}
+  schema={legalSchema}
+>
   <section class="legal-section">
     <div class="container narrow">
       <div class="reveal">
-        <span class="section-label">Cadre Légal</span>
-        <h1 class="section-title">Politique de <span class="text-stroke">Confidentialité</span></h1>
-        
+        <span class="section-label">Cadre légal</span>
+        <h1 class="section-title">Politique de <span class="text-stroke">confidentialité</span></h1>
+
         <div class="legal-content">
-          <p class="last-update">Dernière mise à jour : 18 décembre 2025</p>
+          <p class="last-update">Dernière mise à jour : 14 mars 2026</p>
 
           <p class="intro">
-            Le <strong>Boxing Club COLAK</strong> accorde une grande importance à la protection de votre vie privée. 
-            Cette page vous explique de manière transparente quelles données nous collectons via notre site et comment nous les utilisons.
+            Cette page résume les données traitées sur le site du <strong>{clubInfo.name}</strong>,
+            l'usage du formulaire de contact, les contenus tiers et les préférences de confidentialité.
           </p>
 
           <div class="legal-grid">
             <article class="legal-card">
-              <h3>1. Responsable du traitement</h3>
+              <h2>1. Responsable</h2>
               <p>
-                Le responsable du traitement des données est le Boxing Club COLAK, situé à Rue de l'Olive 13A, 7100 La Louvière. 
-                Pour toute question, vous pouvez nous contacter à : <strong class="gold">mirac.colak@outlook.com</strong>.
+                Le responsable du traitement est le <strong>{clubInfo.name}</strong>,
+                {` `}situé à <strong>{clubInfo.addressFull}</strong>.
+                Pour toute question : <strong class="gold">{clubInfo.email}</strong>.
               </p>
             </article>
 
             <article class="legal-card">
-              <h3>2. Quelles données collectons-nous ?</h3>
+              <h2>2. Données traitées</h2>
               <ul class="legal-list">
                 <li>
-                  <strong>Données de statistiques :</strong> Nous utilisons Google Analytics pour mesurer l'audience du site (nombre de visites). Ces données sont anonymes.
+                  <strong>Formulaire de contact :</strong> nom, email, sujet et message.
                 </li>
                 <li>
-                  <strong>Données de contact :</strong> Via notre formulaire, nous collectons votre Nom, Email, Téléphone et Message uniquement pour vous recontacter.
+                  <strong>Mesure d'audience :</strong> données techniques agrégées via Vercel Web Analytics.
+                </li>
+                <li>
+                  <strong>Préférences :</strong> mémorisation locale de votre choix de confidentialité dans le navigateur.
                 </li>
               </ul>
             </article>
 
             <article class="legal-card">
-              <h3>3. Pourquoi collectons-nous ces données ?</h3>
-              <p>Nous utilisons vos données uniquement pour :</p>
+              <h2>3. Finalités</h2>
               <ul class="legal-list">
-                <li>Répondre à vos questions et demandes d'inscription.</li>
-                <li>Améliorer l'expérience utilisateur sur notre site web.</li>
+                <li>Répondre aux demandes envoyées via le formulaire.</li>
+                <li>Améliorer la lisibilité et les performances du site.</li>
+                <li>Éviter de reposer votre choix de confidentialité à chaque visite.</li>
               </ul>
-              <p class="note"><strong>Note :</strong> Nous ne vendons, ne louons et ne partageons jamais vos données avec des tiers.</p>
             </article>
 
             <article class="legal-card">
-              <h3>4. Cookies</h3>
+              <h2>4. Services utilisés</h2>
+              <ul class="legal-list">
+                <li>
+                  <strong>EmailJS :</strong> utilisé pour transmettre les messages du formulaire.
+                </li>
+                <li>
+                  <strong>Vercel Web Analytics :</strong> utilisé pour mesurer l'audience du site sans cookie analytique.
+                </li>
+                <li>
+                  <strong>Liens Google Maps / Waze :</strong> ces services externes ne s'ouvrent que si vous cliquez sur les boutons prévus à cet effet.
+                </li>
+              </ul>
+            </article>
+
+            <article class="legal-card">
+              <h2>5. Cookies et stockage local</h2>
               <p>
-                Le site utilise des cookies pour les statistiques. Vous pouvez les refuser via la bannière lors de votre première visite.
+                Le site ne dépose pas de cookie analytique interne pour la mesure d'audience.
+                En revanche, votre choix de confidentialité est stocké localement dans votre navigateur.
+              </p>
+              <p class="note">
+                <strong>Note :</strong> si vous ouvrez Google Maps ou Waze via un lien externe,
+                vous quittez le site et les règles de confidentialité du service tiers s'appliquent.
               </p>
             </article>
 
             <article class="legal-card">
-              <h3>5. Vos droits</h3>
+              <h2>6. Durée et droits</h2>
               <p>
-                Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression. 
-                Contactez-nous sur : <strong class="gold">mirac.colak@outlook.com</strong>.
+                Les messages reçus sont conservés le temps nécessaire pour répondre à votre demande et assurer le suivi.
+                Conformément au RGPD, vous pouvez demander l'accès, la rectification ou la suppression de vos données
+                en écrivant à <strong class="gold">{clubInfo.email}</strong>.
               </p>
             </article>
           </div>
@@ -70,7 +103,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         <div class="back-home">
           <a href="/" class="btn-back">
-            <span class="arrow">←</span> RETOUR À L'ACCUEIL
+            <span class="arrow">←</span> Retour à l'accueil
           </a>
         </div>
       </div>
@@ -79,80 +112,83 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 </BaseLayout>
 
 <style>
-  /* AJUSTEMENT POUR LE HEADER ABSOLUTE */
   .legal-section {
-    padding: 180px 0 100px; /* On pousse le contenu vers le bas pour éviter le menu */
+    padding: 180px 0 100px;
     background: var(--color-bg);
   }
 
   .container.narrow {
-    max-width: 800px;
+    max-width: 860px;
     margin: 0 auto;
   }
 
   .section-label {
-    display: block;
-    font-family: var(--font-accent);
+    display: inline-flex;
+    margin-bottom: 14px;
     color: var(--color-accent);
-    letter-spacing: 4px;
+    font-family: var(--font-accent);
+    font-size: 0.88rem;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
   }
 
   .section-title {
     font-size: clamp(2.5rem, 6vw, 4rem);
     color: #fff;
-    line-height: 1.1;
-    margin-bottom: 50px;
+    line-height: 1.05;
+    margin-bottom: 38px;
   }
 
   .legal-content {
-    line-height: 1.8;
-    color: #888;
+    color: #9b9b9b;
+    line-height: 1.75;
   }
 
   .last-update {
-    font-style: italic;
-    font-size: 0.85rem;
-    margin-bottom: 30px;
-    opacity: 0.6;
+    margin-bottom: 24px;
+    font-size: 0.88rem;
+    opacity: 0.7;
   }
 
   .intro {
-    font-size: 1.2rem;
-    margin-bottom: 60px;
-    color: #bbb;
+    margin-bottom: 42px;
+    color: #c7c7c7;
+    font-size: 1.08rem;
+    line-height: 1.75;
   }
 
   .legal-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
+    display: grid;
+    gap: 24px;
   }
 
   .legal-card {
+    padding: 22px 24px;
     border-left: 1px solid var(--color-accent);
-    padding-left: 30px;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   }
 
-  h3 {
-    font-family: var(--font-accent);
+  .legal-card h2 {
+    margin-bottom: 12px;
     color: #fff;
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
+    font-size: 1.55rem;
+    font-family: var(--font-accent);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
   }
 
   .legal-list {
-    list-style: none;
-    margin: 20px 0;
+    display: grid;
+    gap: 12px;
+    margin-top: 12px;
   }
 
   .legal-list li {
     position: relative;
-    padding-left: 25px;
-    margin-bottom: 15px;
+    padding-left: 22px;
   }
 
   .legal-list li::before {
@@ -162,20 +198,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--color-accent);
   }
 
-  .gold { color: var(--color-accent); }
-  
-  .note {
-    background: rgba(199, 157, 49, 0.05);
-    padding: 15px;
-    border-radius: 4px;
-    margin-top: 20px;
-    font-size: 0.9rem;
+  .gold {
+    color: var(--color-accent);
   }
 
-  /* BOUTON RETOUR */
+  .note {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: rgba(199, 157, 49, 0.06);
+    border: 1px solid rgba(199, 157, 49, 0.12);
+    color: #cfcfcf;
+  }
+
   .back-home {
-    margin-top: 80px;
-    padding-top: 40px;
+    margin-top: 56px;
+    padding-top: 28px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
   }
 
@@ -183,31 +220,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    font-family: var(--font-accent);
     color: var(--color-accent);
-    text-decoration: none;
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    transition: 0.3s;
+    font-family: var(--font-accent);
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   .btn-back:hover {
     color: #fff;
-    transform: translateX(-5px);
   }
 
   .text-stroke {
     color: transparent;
-    -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.4);
   }
 
-  @media (max-width: 768px) {
-    .legal-section { padding-top: 140px; }
-    .legal-card { padding-left: 20px; }
-    h3 { font-size: 1.5rem; }
-  }
-
-  /* ANIMATION REVEAL */
   .reveal {
     opacity: 0;
     transform: translateY(20px);
@@ -218,6 +246,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .legal-section {
+      padding-top: 140px;
+      padding-bottom: 74px;
+    }
+
+    .legal-card {
+      padding: 18px;
+    }
+
+    .legal-card h2 {
+      font-size: 1.3rem;
     }
   }
 </style>

@@ -1,31 +1,39 @@
 ---
+import MapPanel from "../components/MapPanel.astro";
+import { clubInfo, contactSubjects } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const clubName = "BOXING CLUB COLAK";
-const adresseClub = "Rue de l'Olive 13A, 7100 La Louvière";
-const clubEmail = "mirac.colak@outlook.com";
-const clubPhone = "0487 11 88 77";
-const clubPhoneValue = "+32487118877";
+const emailJsConfig = {
+  publicKey:
+    import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY ?? "mAR7_JuiRBmmhJtuq",
+  serviceId:
+    import.meta.env.PUBLIC_EMAILJS_SERVICE_ID ?? "service_yf1ji1g",
+  templateId:
+    import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID ?? "template_0clvoqw",
+};
 
-const subjects = [
-  "Séance d'essai gratuite",
-  "Inscription (Novice / Loisir)",
-  "Inscription (Compétiteur)",
-  "Question générale",
-  "Partenariat / Presse"
-];
+const contactSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  name: `Contact ${clubInfo.name}`,
+  url: `${clubInfo.siteUrl}/contact`,
+  description:
+    "Page de contact du Boxing Club Colak à La Louvière pour les séances d'essai, inscriptions et demandes d'information.",
+});
 ---
 
 <BaseLayout 
-  title={`Contact — ${clubName}`}
-  description="Contactez le Boxing Club Colak à La Louvière pour une séance d'essai ou toute demande d'information."
+  title={`Contact et inscription | ${clubInfo.name}`}
+  description={`Contactez ${clubInfo.name}, club de boxe anglaise à ${clubInfo.city}, pour une séance d'essai, une inscription loisir ou un suivi compétiteur.`}
+  image="/hero-boxe.jpg"
+  schema={contactSchema}
 >
 
 <section class="contact-hero first">
   <div class="container reveal">
     <span class="section-label">Disponibilité & Écoute</span>
     <h1 class="page-title">ENTRER SUR <span class="text-stroke">LE RING</span></h1>
-    <p class="hero-subtitle">Prêt à franchir le pas ? Envoyez-nous un message ou passez nous voir directement au club pour une immersion totale.</p>
+    <p class="hero-subtitle">Vous cherchez un club de boxe anglaise à La Louvière pour commencer, reprendre ou vous structurer ? Utilisez ce formulaire pour réserver une séance d'essai ou préparer votre inscription.</p>
   </div>
 </section>
 
@@ -39,26 +47,28 @@ const subjects = [
           
           <div class="info-item">
             <span class="info-label">Adresse</span>
-            <p>{adresseClub}</p>
+            <p>{clubInfo.addressFull}</p>
           </div>
 
           <div class="info-item">
             <span class="info-label">Téléphone</span>
-            <p><a href={`tel:${clubPhoneValue}`} class="link-gold">{clubPhone}</a></p>
+            <p><a href={`tel:${clubInfo.phoneHref}`} class="link-gold">{clubInfo.phoneDisplay}</a></p>
           </div>
 
           <div class="info-item">
             <span class="info-label">E-mail</span>
-            <p><a href={`mailto:${clubEmail}`} class="link-gold">{clubEmail}</a></p>
+            <p><a href={`mailto:${clubInfo.email}`} class="link-gold">{clubInfo.email}</a></p>
           </div>
         </div>
 
         <div class="social-card">
           <h2 class="info-title">Réseaux Sociaux</h2>
           <div class="social-links">
-            <a href="https://www.instagram.com/boxing.club.colak/" target="_blank" rel="noopener noreferrer" class="social-btn">Instagram</a>
-            <a href="https://www.facebook.com/profile.php?id=100089497443998" target="_blank" rel="noopener noreferrer" class="social-btn">Facebook</a>
-            <a href="https://www.tiktok.com/@boxing.club.colak" target="_blank" rel="noopener noreferrer" class="social-btn">TikTok</a>
+            {clubInfo.socialLinks.map((social) => (
+              <a href={social.href} target="_blank" rel="noopener noreferrer" class="social-btn">
+                {social.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>
@@ -68,18 +78,18 @@ const subjects = [
           <div class="form-group-row">
             <div class="form-group">
               <label for="name">Nom complet</label>
-              <input type="text" id="name" name="name" placeholder="Ex: Jean Dupont" required />
+              <input type="text" id="name" name="name" placeholder="Nom et prénom" autocomplete="name" required />
             </div>
             <div class="form-group">
               <label for="email">E-mail</label>
-              <input type="email" id="email" name="email" placeholder="votre@email.com" required />
+              <input type="email" id="email" name="email" placeholder="votre@email.com" autocomplete="email" required />
             </div>
           </div>
 
           <div class="form-group">
             <label for="subject">Sujet de votre demande</label>
             <select id="subject" name="subject">
-              {subjects.map(s => (
+              {contactSubjects.map(s => (
                 <option value={s}>{s}</option>
               ))}
             </select>
@@ -91,21 +101,17 @@ const subjects = [
           </div>
 
           <button type="submit" id="submit-btn" class="btn-submit">ENVOYER LE MESSAGE</button>
-          <p id="form-status" class="form-status-msg"></p>
+          <p id="form-status" class="form-status-msg" aria-live="polite"></p>
         </form>
       </div>
     </div>
 
-    <div class="map-container reveal">
-      <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2537.3592178226023!2d4.181827476839841!3d50.47164928574167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2497e322ecbd9%3A0x8e64d515df3adb56!2sBoxing%20Club%20Colak!5e0!3m2!1sfr!2sbe!4v1735748956482!5m2!1sfr!2sbe" 
-        width="100%" 
-        height="450" 
-        style="border:0;" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
+    <div class="map-panel-wrapper reveal">
+      <MapPanel
+        title="Préparer votre venue au club"
+        subtitle="Retrouvez l'adresse exacte, le contact direct et un itinéraire simple vers la salle. Cela rend la première venue plus fluide et renforce la cohérence locale du site."
+        detailsTitle="Avant de venir"
+      />
     </div>
   </div>
 </section>
@@ -113,35 +119,67 @@ const subjects = [
 </BaseLayout>
 
 <script is:inline src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script is:inline>
-  (function() {
-    emailjs.init("mAR7_JuiRBmmhJtuq");
-  })();
-
+<script is:inline define:vars={{ emailJsConfig }}>
   const contactForm = document.getElementById('contact-form');
+  const subjectSelect = document.getElementById('subject');
   const submitBtn = document.getElementById('submit-btn');
   const statusMsg = document.getElementById('form-status');
 
-  contactForm.addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    submitBtn.innerText = "ENVOI EN COURS...";
-    submitBtn.disabled = true;
+  const sujetMap = {
+    essai: "Séance d'essai gratuite",
+    "fitness-femmes": "Cours boxe fitness femmes",
+    novice: "Inscription (Novice / Loisir)",
+    competiteur: "Inscription (Compétiteur)",
+    question: "Question générale",
+    partenariat: "Partenariat / Presse"
+  };
 
-    emailjs.sendForm('service_yf1ji1g', 'template_0clvoqw', this)
-      .then(function() {
-        statusMsg.innerText = "Message envoyé avec succès ! Le coach vous répondra bientôt.";
-        statusMsg.style.color = "#c79d31";
-        contactForm.reset();
-        submitBtn.innerText = "ENVOYER LE MESSAGE";
-        submitBtn.disabled = false;
-      }, function(error) {
-        statusMsg.innerText = "Erreur lors de l'envoi. Veuillez réessayer plus tard.";
+  if (subjectSelect) {
+    const preselected = sujetMap[new URLSearchParams(window.location.search).get('sujet')];
+    if (preselected) subjectSelect.value = preselected;
+  }
+
+  if (contactForm && submitBtn && statusMsg) {
+    if (window.emailjs && emailJsConfig.publicKey) {
+      window.emailjs.init(emailJsConfig.publicKey);
+    }
+
+    contactForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      if (!window.emailjs || !emailJsConfig.serviceId || !emailJsConfig.templateId) {
+        statusMsg.innerText = "Le service d'envoi est indisponible pour le moment.";
         statusMsg.style.color = "#ff4d4d";
-        submitBtn.innerText = "RÉESSAYER";
-        submitBtn.disabled = false;
-      });
-  });
+        return;
+      }
+
+      submitBtn.innerText = "ENVOI EN COURS...";
+      submitBtn.disabled = true;
+
+      const formData = new FormData(contactForm);
+      const templateParams = {
+        name: String(formData.get('name') || '').trim(),
+        email: String(formData.get('email') || '').trim(),
+        subject: String(formData.get('subject') || '').trim(),
+        message: String(formData.get('message') || '').trim(),
+        reply_to: String(formData.get('email') || '').trim(),
+      };
+
+      window.emailjs.send(emailJsConfig.serviceId, emailJsConfig.templateId, templateParams)
+        .then(() => {
+          statusMsg.innerText = "Message envoyé avec succès ! Le coach vous répondra bientôt.";
+          statusMsg.style.color = "#c79d31";
+          contactForm.reset();
+          submitBtn.innerText = "ENVOYER LE MESSAGE";
+          submitBtn.disabled = false;
+        }, () => {
+          statusMsg.innerText = "Erreur lors de l'envoi. Veuillez réessayer plus tard.";
+          statusMsg.style.color = "#ff4d4d";
+          submitBtn.innerText = "RÉESSAYER";
+          submitBtn.disabled = false;
+        });
+    });
+  }
 
   // Animation Reveal
   const observer = new IntersectionObserver((entries) => {
@@ -154,7 +192,7 @@ const subjects = [
 
 <style>
   /* CONFIGURATION GÉNÉRALE */
-  .contact-hero { padding: 180px 0 80px; text-align: left; }
+  .contact-hero { padding: 154px 0 72px; text-align: left; }
   
   .section-label {
     display: block;
@@ -180,17 +218,17 @@ const subjects = [
   }
 
   .hero-subtitle { 
-    max-width: 700px; 
-    font-size: 1.2rem; 
+    max-width: 760px; 
+    font-size: 1.14rem; 
     color: #888; 
-    line-height: 1.6;
+    line-height: 1.58;
   }
 
-  .section-contact-main { padding-bottom: 100px; }
+  .section-contact-main { padding-bottom: 82px; }
   .contact-grid { 
     display: grid; 
-    grid-template-columns: 1fr 1.6fr; 
-    gap: 80px; 
+    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr); 
+    gap: 48px; 
     align-items: flex-start;
   }
 
@@ -198,7 +236,7 @@ const subjects = [
   .info-card, .social-card { 
     background: rgba(255, 255, 255, 0.02); 
     border: 1px solid rgba(255, 255, 255, 0.05); 
-    padding: 50px; 
+    padding: 36px; 
     margin-bottom: 30px; 
   }
 
@@ -242,7 +280,7 @@ const subjects = [
   .form-wrapper { 
     background: rgba(199, 157, 49, 0.03); 
     border: 1px solid rgba(199, 157, 49, 0.1); 
-    padding: 60px; 
+    padding: 38px; 
   }
   .contact-form { display: flex; flex-direction: column; gap: 30px; }
   .form-group-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
@@ -280,18 +318,20 @@ const subjects = [
   .form-status-msg { margin-top: 20px; font-size: 1rem; font-weight: 500; text-align: center; }
 
   /* MAP */
-  .map-container { margin-top: 80px; border: 1px solid rgba(255, 255, 255, 0.05); filter: grayscale(1) invert(0.9) contrast(1.2); }
+  .map-panel-wrapper { margin-top: 56px; }
 
   /* RESPONSIVE */
   @media (max-width: 1024px) {
-    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 32px; }
   }
 
   @media (max-width: 768px) {
-    .contact-hero { padding-top: 140px; }
-    .form-wrapper { padding: 40px 20px; }
+    .contact-hero { padding: 132px 0 58px; }
+    .hero-subtitle { font-size: 1.02rem; }
+    .section-contact-main { padding-bottom: 68px; }
+    .form-wrapper { padding: 26px 18px; }
     .form-group-row { grid-template-columns: 1fr; gap: 24px; }
-    .info-card, .social-card { padding: 30px; }
+    .info-card, .social-card { padding: 24px 18px; }
   }
 
   /* REVEAL ANIMATION */
