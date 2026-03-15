@@ -32,7 +32,7 @@ const staff = [
     role: "Coach adjoint / Soigneur",
     description:
       "Renforce le travail quotidien du staff et la vigilance autour des boxeurs.",
-    image: resolveOptimizedPublicPath("/mass.jpeg"),
+    image: resolveOptimizedPublicPath("/massi.jpeg"),
     style: "object-position: center 24%;",
   },
   {
@@ -81,6 +81,7 @@ const boxeursAmateurs = [
   { nom: "Kelson Impérial", image: resolveOptimizedPublicPath("/kelson.jpeg") },
   { nom: "Randy Konde", image: resolveOptimizedPublicPath("/randy.jpeg") },
   { nom: "Joël Adingara", image: resolveOptimizedPublicPath("/joel.jpeg") },
+  { nom: "Noa La Bella", image: resolveOptimizedPublicPath("/noa.jpeg") },
   { nom: "Murat Kulaksiz", image: resolveOptimizedPublicPath("/murat.jpeg") },
   { nom: "Anselme Kabala", image: resolveOptimizedPublicPath("/ace.jpeg") },
   { nom: "Aïssa Benmaamar", image: resolveOptimizedPublicPath("/aisa.jpeg") },
@@ -93,6 +94,7 @@ const boxeursAmateurs = [
 const priorityImages = [...new Set([
   ...staff.map((member) => member.image),
   ...boxeursPro.map((fighter) => fighter.image),
+  ...boxeursAmateurs.slice(0, 4).map((fighter) => fighter.image),
 ])];
 
 const clubPillars = [
@@ -269,14 +271,15 @@ const pageSchema = JSON.stringify({
       </div>
 
       <div class="amateur-grid">
-        {boxeursAmateurs.map((boxeur) => (
+        {boxeursAmateurs.map((boxeur, index) => (
           <article class="amateur-card reveal">
             <div class="amateur-media">
               <img
                 src={boxeur.image}
                 alt={boxeur.nom}
                 class="amateur-img"
-                loading="lazy"
+                loading={index < 4 ? "eager" : "lazy"}
+                fetchpriority={index < 2 ? "high" : "auto"}
                 decoding="async"
               />
             </div>

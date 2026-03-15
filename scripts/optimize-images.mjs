@@ -11,7 +11,7 @@ const widthFor = (fileName) => {
   if (fileName === "logo.png") return 260;
   if (fileName === "hero-boxe.jpg") return 1600;
   if (fileName.startsWith("whatsapp")) return 900;
-  return 900;
+  return 720;
 };
 
 const shouldOptimize = (fileName) => {
