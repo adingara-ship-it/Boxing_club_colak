@@ -30,11 +30,11 @@ export const clubInfo = {
   name: "BOXING CLUB COLAK",
   city: "La Louvière",
   region: "Hainaut",
-  addressLine: "Rue de l'Olive 13A",
+  addressLine: "2, Rue Victor Boch",
   postalCode: "7100",
   country: "Belgique",
   countryCode: "BE",
-  addressFull: "Rue de l'Olive 13A, 7100 La Louvière, Belgique",
+  addressFull: "2, Rue Victor Boch, 7100 La Louvière, Belgique",
   email: "mirac.colak@outlook.com",
   phoneDisplay: "0487 11 88 77",
   phoneHref: "+32487118877",
@@ -42,11 +42,11 @@ export const clubInfo = {
   longitude: 4.1373533,
   siteUrl: "https://www.boxingclubcolak.com",
   googleMapsEmbed:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2542.483166874987!2d4.1373533!3d50.4601438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c230554045f8f5%3A0xc6c4f4a3e9c7f6b!2sRue%20de%20l'Olive%2013A%2C%207100%20La%20Louvi%C3%A8re%2C%20Belgique!5e0!3m2!1sfr!2sbe!4v1710000000000!5m2!1sfr!2sbe",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2542.483166874987!2d4.1373533!3d50.4601438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s2%20Rue%20Victor%20Boch%2C%207100%20La%20Louvi%C3%A8re%2C%20Belgique!5e0!3m2!1sfr!2sbe!4v1710000000000!5m2!1sfr!2sbe",
   googleMapsUrl:
-    "https://www.google.com/maps/search/?api=1&query=Rue%20de%20l%27Olive%2013A%2C%207100%20La%20Louvi%C3%A8re",
+    "https://www.google.com/maps/search/?api=1&query=2%20Rue%20Victor%20Boch%2C%207100%20La%20Louvi%C3%A8re",
   googleDirectionsUrl:
-    "https://www.google.com/maps/dir/?api=1&destination=Rue%20de%20l%27Olive%2013A%2C%207100%20La%20Louvi%C3%A8re",
+    "https://www.google.com/maps/dir/?api=1&destination=2%20Rue%20Victor%20Boch%2C%207100%20La%20Louvi%C3%A8re",
   wazeUrl: "https://www.waze.com/ul?ll=50.4601438,4.1373533&navigate=yes",
   areaServed: ["La Louvière", "Binche", "Manage", "Morlanwelz", "Le Roeulx"],
   socialLinks: [
@@ -73,34 +73,16 @@ export const trainingSchedule = [
     time: "18h00 - 20h00",
   },
   {
-    day: "Mardi",
-    schemaDay: "Tuesday",
-    audience: "Débutants et récréants",
-    time: "18h00 - 20h00",
-  },
-  {
     day: "Mercredi",
     schemaDay: "Wednesday",
-    audience: "Compétiteurs",
-    time: "18h00 - 20h00",
-  },
-  {
-    day: "Jeudi",
-    schemaDay: "Thursday",
-    audience: "Débutants et récréants",
+    audience: "Compétiteurs, débutants et récréants",
     time: "18h00 - 20h00",
   },
   {
     day: "Vendredi",
     schemaDay: "Friday",
-    audience: "Compétiteurs",
+    audience: "Compétiteurs, débutants et récréants",
     time: "18h00 - 20h00",
-  },
-  {
-    day: "Samedi",
-    schemaDay: "Saturday",
-    audience: "Boxe fitness femmes",
-    time: "10h00 - 11h00",
   },
 ] as const;
 
@@ -120,29 +102,46 @@ export const homeHighlights = [
 ] as const;
 
 export const getHomeAnnouncements = () => {
-  const womenFitnessImage = findPublicFileByPrefix("whatsapp");
-
   return [
     {
-      date: "2026-03-14",
-      category: "Nouveau",
-      title: "Cours de boxe fitness exclusivement pour les femmes",
+      date: "2026-05-18",
+      category: "Reprise",
+      title: "Reprise des entraînements — Lundi 18 mai à 18h00",
       excerpt:
-        "Nouveau rendez-vous le samedi matin: boxe cardio, renforcement musculaire et boxe technique.",
+        "La nouvelle salle est prête. On commence fort à l'École Communale du Bocage (Salle de Gym), Rue Victor Boch 2, La Louvière.",
       urgent: true,
-      image: womenFitnessImage
-        ? resolveOptimizedPublicPath(womenFitnessImage)
-        : undefined,
-      imageAlt:
-        "Affiche du cours de boxe fitness pour femmes du Boxing Club Colak",
-      details: ["Samedi 10h00 - 11h00", "15 EUR la séance", "50 EUR les 5 séances"],
+      details: ["Lundi 18h00 – 20h00", "Chaussures propres obligatoires", "Cotisation en ordre requise"],
       link: {
-        href: "/contact?sujet=fitness-femmes",
-        label: "Demander une place",
+        href: "/contact?sujet=essai",
+        label: "Rejoindre le club",
       },
     },
     {
-      date: "2026-03-10",
+      date: "2026-05-18",
+      category: "Nouvelle salle",
+      title: "École Communale du Bocage — une nouvelle énergie",
+      excerpt:
+        "Le club s'installe dans une salle plus grande et mieux équipée pour accueillir débutants, loisir et compétiteurs dans de meilleures conditions.",
+      urgent: false,
+      link: {
+        href: "/contact",
+        label: "Nous contacter",
+      },
+    },
+    {
+      date: "2026-05-18",
+      category: "Règlement",
+      title: "Chaussures de ville interdites dans la salle",
+      excerpt:
+        "Prévoir une paire de chaussures propres exclusivement réservées aux entraînements. Aucun entraînement sans cotisation réglée.",
+      urgent: false,
+      link: {
+        href: "/contact",
+        label: "Poser une question",
+      },
+    },
+    {
+      date: "2026-05-10",
       category: "Essai",
       title: "Les séances d'essai se réservent via la page contact",
       excerpt:
@@ -151,30 +150,6 @@ export const getHomeAnnouncements = () => {
       link: {
         href: "/contact?sujet=essai",
         label: "Réserver une séance d'essai",
-      },
-    },
-    {
-      date: "2026-03-06",
-      category: "Organisation",
-      title: "Présentez-vous 15 minutes avant votre premier entraînement",
-      excerpt:
-        "Cela permet de vous orienter et de démarrer dans de bonnes conditions.",
-      urgent: false,
-      link: {
-        href: "/contact",
-        label: "Poser une question au coach",
-      },
-    },
-    {
-      date: "2026-02-27",
-      category: "Planning",
-      title: "Les créneaux compétiteurs restent maintenus en milieu et fin de semaine",
-      excerpt:
-        "Les séances du mercredi et du vendredi restent dédiées au travail compétiteur.",
-      urgent: false,
-      link: {
-        href: "#horaires",
-        label: "Voir le planning",
       },
     },
   ];
@@ -205,7 +180,6 @@ export const faqItems = [
 
 export const contactSubjects = [
   "Séance d'essai gratuite",
-  "Cours boxe fitness femmes",
   "Inscription (Novice / Loisir)",
   "Inscription (Compétiteur)",
   "Question générale",
