@@ -69,20 +69,27 @@ export const trainingSchedule = [
   {
     day: "Lundi",
     schemaDay: "Monday",
-    audience: "Compétiteurs, débutants et récréants",
-    time: "18h00 - 20h00",
+    slots: [
+      { audience: "Compétiteurs, débutants et récréants", time: "18h00 - 20h00", opens: "18:00", closes: "20:00" },
+    ],
   },
   {
     day: "Mercredi",
     schemaDay: "Wednesday",
-    audience: "Compétiteurs, débutants et récréants",
-    time: "18h00 - 20h00",
+    slots: [
+      { audience: "Boxe éducative — enfants", time: "17h00 - 18h00", opens: "17:00", closes: "18:00" },
+      { audience: "Boxe féminine", time: "17h00 - 18h00", opens: "17:00", closes: "18:00" },
+      { audience: "Compétiteurs, débutants et récréants", time: "18h00 - 20h00", opens: "18:00", closes: "20:00" },
+    ],
   },
   {
     day: "Vendredi",
     schemaDay: "Friday",
-    audience: "Compétiteurs, débutants et récréants",
-    time: "18h00 - 20h00",
+    slots: [
+      { audience: "Boxe éducative — enfants", time: "17h00 - 18h00", opens: "17:00", closes: "18:00" },
+      { audience: "Boxe féminine", time: "17h00 - 18h00", opens: "17:00", closes: "18:00" },
+      { audience: "Compétiteurs, débutants et récréants", time: "18h00 - 20h00", opens: "18:00", closes: "20:00" },
+    ],
   },
 ] as const;
 
@@ -105,6 +112,32 @@ export const getHomeAnnouncements = () => {
   return [
     {
       date: "2026-05-18",
+      category: "Jeunesse",
+      title: "Section jeunesse — Boxe éducative & Psychomotricité",
+      excerpt:
+        "Le Boxing Club Colak développe sa section jeunesse avec des séances de boxe éducative et psychomotricité, encadrées par des coachs diplômés et boxeurs licenciés à la Ligue Francophone de Boxe.",
+      urgent: false,
+      details: ["Mercredi 17h00 - 18h00", "Vendredi 17h00 - 18h00"],
+      link: {
+        href: "/contact?sujet=essai",
+        label: "Inscrire mon enfant",
+      },
+    },
+    {
+      date: "2026-05-18",
+      category: "Féminine",
+      title: "Boxe féminine — Ouvert à toutes",
+      excerpt:
+        "Séances adaptées aux débutantes : cardio, renforcement musculaire et initiation technique à la boxe anglaise. Un cadre bienveillant, progressif et encadré.",
+      urgent: false,
+      details: ["Mercredi 17h00 - 18h00", "Vendredi 17h00 - 18h00"],
+      link: {
+        href: "/contact?sujet=essai",
+        label: "Réserver une séance",
+      },
+    },
+    {
+      date: "2026-05-18",
       category: "Reprise",
       title: "Reprise des entraînements — Lundi 18 mai à 18h00",
       excerpt:
@@ -114,30 +147,6 @@ export const getHomeAnnouncements = () => {
       link: {
         href: "/contact?sujet=essai",
         label: "Rejoindre le club",
-      },
-    },
-    {
-      date: "2026-05-18",
-      category: "Nouvelle salle",
-      title: "École Communale du Bocage — une nouvelle énergie",
-      excerpt:
-        "Le club s'installe dans une salle plus grande et mieux équipée pour accueillir débutants, loisir et compétiteurs dans de meilleures conditions.",
-      urgent: false,
-      link: {
-        href: "/contact",
-        label: "Nous contacter",
-      },
-    },
-    {
-      date: "2026-05-18",
-      category: "Règlement",
-      title: "Chaussures de ville interdites dans la salle",
-      excerpt:
-        "Prévoir une paire de chaussures propres exclusivement réservées aux entraînements. Aucun entraînement sans cotisation réglée.",
-      urgent: false,
-      link: {
-        href: "/contact",
-        label: "Poser une question",
       },
     },
     {

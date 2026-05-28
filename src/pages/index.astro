@@ -13,7 +13,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const heroMeta = [
   clubInfo.city,
-  "Lundi, mercredi et vendredi 18h00 - 20h00",
+  "Lundi, mercredi et vendredi",
+  "Sessions dès 17h00",
 ];
 
 const homeAnnouncements = getHomeAnnouncements();
@@ -51,12 +52,14 @@ const localBusinessSchema = {
         "@type": "Place",
         name: area,
       })),
-      openingHoursSpecification: trainingSchedule.map((slot) => ({
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: `https://schema.org/${slot.schemaDay}`,
-        opens: slot.schemaDay === "Saturday" ? "10:00" : "18:00",
-        closes: slot.schemaDay === "Saturday" ? "11:00" : "20:00",
-      })),
+      openingHoursSpecification: trainingSchedule.flatMap((day) =>
+        day.slots.map((slot) => ({
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: `https://schema.org/${day.schemaDay}`,
+          opens: slot.opens,
+          closes: slot.closes,
+        }))
+      ),
     },
     {
       "@type": "FAQPage",
@@ -111,6 +114,32 @@ const schema = JSON.stringify(localBusinessSchema);
           <ul class="hero-meta">
             {heroMeta.map((item) => <li>{item}</li>)}
           </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <strong class="stat-num">16+</strong>
+          <span class="stat-label">Boxeurs actifs</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+          <strong class="stat-num">4</strong>
+          <span class="stat-label">Boxeurs professionnels</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+          <strong class="stat-num">3</strong>
+          <span class="stat-label">Séances par semaine</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat-item">
+          <strong class="stat-num">LFB</strong>
+          <span class="stat-label">Ligue Francophone de Boxe</span>
         </div>
       </div>
     </div>
@@ -192,12 +221,16 @@ const schema = JSON.stringify(localBusinessSchema);
       </div>
 
       <div class="schedule-list">
-        {trainingSchedule.map((slot) => (
+        {trainingSchedule.map((day) => (
           <div class="schedule-item">
-            <div class="item-day">{slot.day}</div>
-            <div class="item-content">
-              <span class="item-type">{slot.audience}</span>
-              <span class="item-time">{slot.time}</span>
+            <div class="item-day">{day.day}</div>
+            <div class="item-slots">
+              {day.slots.map((slot) => (
+                <div class="item-slot">
+                  <span class="item-type">{slot.audience}</span>
+                  <span class="item-time">{slot.time}</span>
+                </div>
+              ))}
             </div>
           </div>
         ))}
@@ -251,7 +284,7 @@ const schema = JSON.stringify(localBusinessSchema);
     .hero {
       position: relative;
       overflow: hidden;
-      padding: 136px 0 70px;
+      padding: 156px 0 90px;
       background:
         radial-gradient(circle at top right, rgba(199, 157, 49, 0.16), transparent 28rem),
         #000;
@@ -372,6 +405,51 @@ const schema = JSON.stringify(localBusinessSchema);
       border-radius: 999px;
       background: rgba(199, 157, 49, 0.7);
       transform: translateY(-50%);
+    }
+
+    .stats-bar {
+      background: rgba(199, 157, 49, 0.05);
+      border-top: 1px solid rgba(199, 157, 49, 0.18);
+      border-bottom: 1px solid rgba(199, 157, 49, 0.08);
+      padding: 32px 0;
+    }
+
+    .stats-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 0 52px;
+    }
+
+    .stat-num {
+      color: var(--color-accent);
+      font-family: var(--font-accent);
+      font-size: 2.8rem;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .stat-label {
+      color: #777;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .stat-sep {
+      width: 1px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.07);
+      flex-shrink: 0;
     }
 
     .section-intro,
@@ -611,9 +689,8 @@ const schema = JSON.stringify(localBusinessSchema);
 
     .schedule-item {
       display: grid;
-      gap: 10px;
+      gap: 14px;
       align-content: start;
-      min-height: 132px;
       padding: 18px;
       border-top: 2px solid var(--color-accent);
       background: rgba(255, 255, 255, 0.03);
@@ -623,7 +700,6 @@ const schema = JSON.stringify(localBusinessSchema);
     }
 
     .item-day {
-      width: auto;
       color: var(--color-accent);
       font-family: var(--font-accent);
       font-size: 1.5rem;
@@ -631,22 +707,35 @@ const schema = JSON.stringify(localBusinessSchema);
       line-height: 1;
     }
 
-    .item-content {
+    .item-slots {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0;
+    }
+
+    .item-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 10px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .item-slot:first-child {
+      padding-top: 0;
+      border-top: none;
     }
 
     .item-type {
       color: #fff;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      line-height: 1.45;
+      line-height: 1.4;
     }
 
     .item-time {
       color: #d8d8d8;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-family: var(--font-accent);
       letter-spacing: 0.08em;
     }
@@ -711,6 +800,10 @@ const schema = JSON.stringify(localBusinessSchema);
     }
 
     @media (max-width: 1080px) {
+      .stat-item {
+        padding: 0 32px;
+      }
+
       .intro-grid,
       .schedule-header {
         grid-template-columns: 1fr;
@@ -732,6 +825,20 @@ const schema = JSON.stringify(localBusinessSchema);
     @media (max-width: 820px) {
       .hero {
         padding-top: 116px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 0;
+      }
+
+      .stat-item {
+        padding: 0 20px;
+      }
+
+      .stat-sep {
+        display: none;
       }
 
       .hero-bg-name,
@@ -834,7 +941,6 @@ const schema = JSON.stringify(localBusinessSchema);
       }
 
       .schedule-item {
-        min-height: auto;
         padding: 16px;
       }
 

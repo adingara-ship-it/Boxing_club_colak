@@ -33,6 +33,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
           </li>
         ))}
       </ul>
+      <a href="/contact?sujet=essai" class="header-cta">Séance d'essai</a>
     </nav>
 
     <button
@@ -109,10 +110,36 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
     transform: translateY(-1px);
   }
 
+  .desktop-only {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+  }
+
   .nav-list {
     display: flex;
     gap: 3rem;
     list-style: none;
+  }
+
+  .header-cta {
+    display: inline-flex;
+    align-items: center;
+    height: 38px;
+    padding: 0 20px;
+    background: var(--color-accent);
+    color: #050505;
+    font-family: var(--font-accent);
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .header-cta:hover {
+    background: #fff;
+    transform: translateY(-1px);
   }
 
   .nav-link {
